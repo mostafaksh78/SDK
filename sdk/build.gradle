@@ -1,4 +1,11 @@
-apply plugin: 'com.android.library'
+ plugins {
+    id 'com.android.library'
+    id 'maven-publish'
+}
+
+group = 'com.github.jitpack'
+version = '1.0'
+
 
 android {
     compileSdkVersion 31
