@@ -1,9 +1,6 @@
- plugins {
-    id 'com.android.library'
-    id 'maven-publish'
-}
-
-group = 'com.github.jitpack'
+apply plugin:'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+group = 'com.github.mostafaksh78'
 version = '1.0'
 
 
@@ -45,15 +42,3 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
 }
- afterEvaluate {
-     publishing {
-         publications {
-             release(MavenPublication) {
-                 from components.release
-                 groupId = 'com.github.mostafaksh78' //your git id
-                 artifactId = 'SDK' //your-repository
-                 version = '1.0.3' // As same as the Tag
-             }
-         }
-     }
- }
