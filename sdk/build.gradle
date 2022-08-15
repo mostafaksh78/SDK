@@ -33,6 +33,7 @@ android {
 }
 
 dependencies {
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.firebase:firebase-messaging:21.0.0'
@@ -44,3 +45,15 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
 }
+ afterEvaluate {
+     publishing {
+         publications {
+             release(MavenPublication) {
+                 from components.release
+                 groupId = 'com.github.mostafaksh78' //your git id
+                 artifactId = 'SDK' //your-repository
+                 version = '1.0.3' // As same as the Tag
+             }
+         }
+     }
+ }
