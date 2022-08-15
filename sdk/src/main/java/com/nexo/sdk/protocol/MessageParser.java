@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MessageParser implements Runnable {
-    private Context context;
+    private final Context context;
     private String message;
 
     public MessageParser(Context context, String message) {

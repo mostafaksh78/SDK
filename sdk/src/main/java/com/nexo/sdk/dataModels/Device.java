@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.List;
-
 @Entity(tableName = "Devices")
 public class Device {
     public static final String ACTION = "DEVICE_ACTION";

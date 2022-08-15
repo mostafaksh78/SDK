@@ -28,11 +28,6 @@ public class MainService extends Service implements Connection.ConnectionCallBac
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-    }
-
-    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         service = this;
         return super.onStartCommand(intent, flags, startId);

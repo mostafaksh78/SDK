@@ -10,7 +10,6 @@ import androidx.room.Update;
 
 import com.nexo.sdk.Global;
 import com.nexo.sdk.dataModels.Remote;
-import com.nexo.sdk.dataModels.Voice;
 
 import org.json.JSONArray;
 import org.json.JSONException;

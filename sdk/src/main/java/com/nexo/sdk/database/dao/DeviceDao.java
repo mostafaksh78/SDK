@@ -1,6 +1,5 @@
 package com.nexo.sdk.database.dao;
 
-import android.icu.util.VersionInfo;
 import android.os.Build;
 
 import androidx.room.Dao;

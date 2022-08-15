@@ -9,8 +9,6 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.nexo.sdk.Global;
-import com.nexo.sdk.dataModels.Room;
-import com.nexo.sdk.dataModels.User;
 import com.nexo.sdk.dataModels.Voice;
 
 import org.json.JSONArray;

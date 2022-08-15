@@ -12,9 +12,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Reconnection implements Runnable {
-    private Handler handler;
+    private final Handler handler;
     private boolean cancelB = false;
-    private Connection.ConnectionCallBack callBack;
+    private final Connection.ConnectionCallBack callBack;
     public Reconnection(Connection.ConnectionCallBack callBack) {
         this.callBack = callBack;
         HandlerThread thread = new HandlerThread("Check");

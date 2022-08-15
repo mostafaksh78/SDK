@@ -6,7 +6,6 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.nexo.sdk.dataModels.Scenario;
 import com.nexo.sdk.dataModels.User;
 
 @Dao

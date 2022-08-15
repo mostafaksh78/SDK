@@ -6,7 +6,6 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.nexo.sdk.dataModels.Device;
 import com.nexo.sdk.dataModels.IfThen;
 
 @Dao

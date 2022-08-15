@@ -10,8 +10,8 @@ import com.nexo.sdk.Global;
 
 public class Listener implements Runnable {
     private static final String TAG = "ListenerTAG";
-    private MessageCallback messageCallback;
-    private Context context;
+    private final MessageCallback messageCallback;
+    private final Context context;
 
     public Listener(MessageCallback messageCallback, Context context) {
         this.messageCallback = messageCallback;
@@ -88,7 +88,7 @@ public class Listener implements Runnable {
         }
     }
 
-    private void parseMessage(String message) throws RemoteException {
+    private void parseMessage(String message) {
         if (message != null) {
             Log.i("Encryption", "UnDecrypted : " + message);
             try {

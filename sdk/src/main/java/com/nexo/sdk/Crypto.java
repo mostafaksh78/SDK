@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.android.gms.common.util.Base64Utils;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -23,8 +24,8 @@ public class Crypto {
     private static final String key = "0123456701234567";
     private static final String initVector = "0000000000000000";
     public static byte[] encrypt(byte[] mes) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, ShortBufferException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
-        IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
-        SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+        IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(StandardCharsets.UTF_8));
+        SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
         cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
         byte[] encrypted= new byte[cipher.getOutputSize(mes.length)];
@@ -36,8 +37,8 @@ public class Crypto {
         byte[] decode ;
         decode = Base64Utils.decode(encrypted);
         Log.i("decryptBymostafa","decode size " + decode.length);
-        IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
-        SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+        IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(StandardCharsets.UTF_8));
+        SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
 
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding ");
         cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);

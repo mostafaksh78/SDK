@@ -10,7 +10,6 @@ import androidx.room.Update;
 
 
 import com.nexo.sdk.Global;
-import com.nexo.sdk.dataModels.Device;
 import com.nexo.sdk.dataModels.Room;
 
 import org.json.JSONArray;

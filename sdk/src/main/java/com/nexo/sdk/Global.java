@@ -1,7 +1,6 @@
 package com.nexo.sdk;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -19,7 +18,7 @@ public class Global {
     public static final String SERVER_IP = "server.nexobuilding.com";
     public static final int SERVER_PORT = 6500;
     public static Socket socket;
-    public static volatile List<String> queue = new ArrayList<>();
+    public static final List<String> queue = new ArrayList<>();
     public static PrintWriter output;
     public static DataInputStream input;
     public static volatile DatabaseClass database;
