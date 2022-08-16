@@ -39,7 +39,7 @@ public class MainService extends Service implements Connection.ConnectionCallBac
         sender.stop();
         listener.stop();
     }
-    private void startConnection(){
+    public void startConnection(){
         Connection connection = new Connection(this);
         Thread thread = new Thread(connection);
         thread.start();
