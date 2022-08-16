@@ -19,15 +19,55 @@ public class Connection implements Runnable {
     @Override
     public void run() {
         try {
-            if (Global.socket == null || !Global.socket.isConnected() || Global.socket.isClosed() || Global.socket.isOutputShutdown() || Global.socket.isInputShutdown()) {
-                Global.socket = new Socket(  Global.SERVER_IP,   Global.SERVER_PORT);
+            if (Global.socket == null) {
+                Global.socket = new Socket(Global.SERVER_IP, Global.SERVER_PORT);
                 Global.socket.setKeepAlive(true);
                 Global.socket.setSendBufferSize(Integer.MAX_VALUE);
-                Global.output = new PrintWriter(  Global.socket.getOutputStream());
+                Global.output = new PrintWriter(Global.socket.getOutputStream());
                 Global.input = new DataInputStream((Global.socket.getInputStream()));
-                Log.i(CONNECTION_TAG,"Connected");
+                Log.i(CONNECTION_TAG, "Connected");
                 callBack.connectionCallBack(true);
                 return;
+            } else if (!Global.socket.isConnected()) {
+                Global.socket = new Socket(Global.SERVER_IP, Global.SERVER_PORT);
+                Global.socket.setKeepAlive(true);
+                Global.socket.setSendBufferSize(Integer.MAX_VALUE);
+                Global.output = new PrintWriter(Global.socket.getOutputStream());
+                Global.input = new DataInputStream((Global.socket.getInputStream()));
+                Log.i(CONNECTION_TAG, "Connected");
+                callBack.connectionCallBack(true);
+                return;
+            } else {
+                if (Global.socket.isClosed()) {
+                    Global.socket = new Socket(Global.SERVER_IP, Global.SERVER_PORT);
+                    Global.socket.setKeepAlive(true);
+                    Global.socket.setSendBufferSize(Integer.MAX_VALUE);
+                    Global.output = new PrintWriter(Global.socket.getOutputStream());
+                    Global.input = new DataInputStream((Global.socket.getInputStream()));
+                    Log.i(CONNECTION_TAG, "Connected");
+                    callBack.connectionCallBack(true);
+                    return;
+                } else if (Global.socket.isOutputShutdown()) {
+                    Global.socket = new Socket(Global.SERVER_IP, Global.SERVER_PORT);
+                    Global.socket.setKeepAlive(true);
+                    Global.socket.setSendBufferSize(Integer.MAX_VALUE);
+                    Global.output = new PrintWriter(Global.socket.getOutputStream());
+                    Global.input = new DataInputStream((Global.socket.getInputStream()));
+                    Log.i(CONNECTION_TAG, "Connected");
+                    callBack.connectionCallBack(true);
+                    return;
+                } else if (Global.socket.isInputShutdown()) {
+                    Global.socket = new Socket(Global.SERVER_IP, Global.SERVER_PORT);
+                    Global.socket.setKeepAlive(true);
+                    Global.socket.setSendBufferSize(Integer.MAX_VALUE);
+                    Global.output = new PrintWriter(Global.socket.getOutputStream());
+                    Global.input = new DataInputStream((Global.socket.getInputStream()));
+                    Log.i(CONNECTION_TAG, "Connected");
+                    callBack.connectionCallBack(true);
+                    return;
+                }else {
+                    callBack.connectionCallBack(true);
+                }
             }
         } catch (Exception e) {
             Global.socket = null;

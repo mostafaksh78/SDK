@@ -92,4 +92,6 @@ public abstract class DeviceDao {
     public abstract void updateSSIDandPassword(String ssid, String pass, List<String> relayIDs);
     @Query("DELETE FROM Devices WHERE token IN (:relayIDs)")
     public abstract void deleteThem(List<String> relayIDs);
+    @Query("SELECT * FROM Devices Where fastAccess = 1")
+    public abstract Device[] getAllFastAccess();
 }
