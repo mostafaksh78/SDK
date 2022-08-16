@@ -57,7 +57,7 @@ public class MainService extends Service implements Connection.ConnectionCallBac
 
                 Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,true));
                 listener = new Listener(MainService.this,MainService.this);
-                Log.d(CONNECTION_TAG, "connectionCallBack: " +"reconnect");
+                Log.d(CONNECTION_TAG, "connectionCallBack: " +"connect");
                 Thread thread = new Thread(listener);
                 thread.start();
                 try {
@@ -69,7 +69,7 @@ public class MainService extends Service implements Connection.ConnectionCallBac
                 Thread thread2 = new Thread(sender);
                 thread2.start();
             }else{
-                Log.d(CONNECTION_TAG, "connectionCallBack: " +"reconnect");
+                Log.d(CONNECTION_TAG, "connectionCallBack: " +" reconnect");
                 Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
                 // check for reconnecting
                 try {

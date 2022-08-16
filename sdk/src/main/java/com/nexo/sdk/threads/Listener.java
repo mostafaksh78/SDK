@@ -53,6 +53,7 @@ public class Listener implements Runnable {
                                         }
                                     }
                                 } else {
+                                    Log.e(TAG, "read Disconnect Server closed");
                                     messageCallback.disconnected();
                                     cancel();
                                     break;

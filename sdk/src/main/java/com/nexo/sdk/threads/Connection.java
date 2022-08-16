@@ -34,8 +34,9 @@ public class Connection implements Runnable {
             Global.input = null;
             Global.output = null;
             Log.i(CONNECTION_TAG,"not Connected : " + e);
+            callBack.connectionCallBack(false);
         }
-        callBack.connectionCallBack(false);
+
     }
 
     public interface ConnectionCallBack{
