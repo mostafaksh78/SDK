@@ -33,7 +33,7 @@ public class Connection implements Runnable {
             Global.socket = null;
             Global.input = null;
             Global.output = null;
-            Log.i(CONNECTION_TAG,"Connected : " + e);
+            Log.i(CONNECTION_TAG,"not Connected : " + e);
         }
         callBack.connectionCallBack(false);
     }

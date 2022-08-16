@@ -3,6 +3,7 @@ package com.nexo.sdk.services;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -11,6 +12,8 @@ import com.nexo.sdk.protocol.MessageParser;
 import com.nexo.sdk.threads.Connection;
 import com.nexo.sdk.threads.Listener;
 import com.nexo.sdk.threads.Sender;
+
+import static com.nexo.sdk.threads.Connection.CONNECTION_TAG;
 
 public class MainService extends Service implements Connection.ConnectionCallBack, Listener.MessageCallback {
     private Listener listener;
@@ -40,7 +43,7 @@ public class MainService extends Service implements Connection.ConnectionCallBac
         sender.stop();
         listener.stop();
     }
-    public      void startConnection(){
+    public  void startConnection(){
         Connection connection = new Connection(this);
         Thread thread = new Thread(connection);
         thread.start();
@@ -48,10 +51,13 @@ public class MainService extends Service implements Connection.ConnectionCallBac
 
     @Override
     public void connectionCallBack(final boolean connection) {
+        Log.d(CONNECTION_TAG, "connectionCallBack: " +connection);
         Runnable runnable = () -> {
             if (connection){
+
                 Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,true));
                 listener = new Listener(MainService.this,MainService.this);
+                Log.d(CONNECTION_TAG, "connectionCallBack: " +"reconnect");
                 Thread thread = new Thread(listener);
                 thread.start();
                 try {
@@ -63,6 +69,7 @@ public class MainService extends Service implements Connection.ConnectionCallBac
                 Thread thread2 = new Thread(sender);
                 thread2.start();
             }else{
+                Log.d(CONNECTION_TAG, "connectionCallBack: " +"reconnect");
                 Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
                 // check for reconnecting
                 try {

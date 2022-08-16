@@ -59,6 +59,7 @@ public class Listener implements Runnable {
                                 }
                             } catch (Exception e) {
                                 Log.e(TAG, "read EXP");
+                                e.printStackTrace();
                                 Global.socket = null;
                                 Global.input = null;
                                 Global.output = null;
