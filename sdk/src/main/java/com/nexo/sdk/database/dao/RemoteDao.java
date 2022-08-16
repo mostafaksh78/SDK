@@ -67,7 +67,7 @@ public abstract class RemoteDao  {
     public abstract List<String> getAllIds();
     @Query("DELETE FROM Remotes WHERE id IN (:v)")
     public abstract void clearOthers(List<String> v);
-    @Query("UPDATE Remotes SET label =:name, type =:type ,model =:model , brand =:brand , userIDs =:users , protocol =:protocol , userMake =:userMake , irID =:irID , roomID =:roomID")
+    @Query("UPDATE Remotes SET label =:name, type =:type ,model =:model , brand =:brand , userIDs =:users , protocol =:protocol , userMake =:userMake , irID =:irID , roomID =:roomID WHERE id =:id")
     public abstract void updateWithoutKey(String id, String name, String type, String model, String brand, String users, String protocol, String userMake, String irID, String roomID);
     @Query("UPDATE Remotes SET keys =:s WHERE id =:remoteID")
     public abstract void updateKey(String remoteID, String s);

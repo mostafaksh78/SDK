@@ -18,14 +18,14 @@ public class Scenario {
     private String deviceStatuses;
     private String userIDs;
 
-    public Scenario(@NonNull String id, String name, String time, String status, String tokens, String deviceStatuses, String userIds) {
+    public Scenario(@NonNull String id, String name, String time, String status, String tokens, String deviceStatuses, String userIDs) {
         this.id = id;
         this.name = name;
         this.time = time;
         this.status = status;
         this.tokens = tokens;
         this.deviceStatuses = deviceStatuses;
-        this.userIDs = userIds;
+        this.userIDs = userIDs;
     }
 
     @NonNull

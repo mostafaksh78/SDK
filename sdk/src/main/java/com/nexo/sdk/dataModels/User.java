@@ -65,11 +65,11 @@ public class User {
         this.password = password;
     }
 
-    public String getRule() {
+    public int getRule() {
         return rule;
     }
 
-    public void setRule(String rule) {
+    public void setRule(int rule) {
         this.rule = rule;
     }
 

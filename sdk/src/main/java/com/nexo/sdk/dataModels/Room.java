@@ -15,9 +15,9 @@ public class Room {
     private String name;
     private int icon;
 
-    public Room(@NonNull String id, String userIds, String name, int icon) {
+    public Room(@NonNull String id, String userIDs, String name, int icon) {
         this.id = id;
-        this.userIDs = userIds;
+        this.userIDs = userIDs;
         this.name = name;
         this.icon = icon;
     }

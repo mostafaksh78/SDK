@@ -20,7 +20,7 @@ import com.nexo.sdk.database.dao.ScenarioDao;
 import com.nexo.sdk.database.dao.UserDao;
 import com.nexo.sdk.database.dao.VoiceDao;
 
-@Database(entities = {Bus.class  , Device.class , IfThen.class, Remote.class , Room.class , Scenario.class, User.class, Voice.class}, version = 1)
+@Database(entities = {Bus.class  , Device.class , IfThen.class, Remote.class , Room.class , Scenario.class, User.class, Voice.class}, version = 1,exportSchema = false)
 public abstract class DatabaseClass extends RoomDatabase {
     public abstract BusDao getBusDao();
     public abstract DeviceDao getDeviceDao();
