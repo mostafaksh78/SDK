@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="main_menu">
+<!--        <item>@string/music</item>-->
+<!--        <item>@string/camera</item>-->
+        <item>@string/remotes</item>
+        <item>@string/scenario</item>
+        <item>@string/rooms</item>
+        <item>@string/devcies</item>
+        <item>@string/voice_commands</item>
+    </string-array>
+    <string-array name="Sex" >
+        <item>@string/male</item>
+        <item>@string/female</item>
+    </string-array>
+    <string-array name="questions">
+        <item>Chose one question</item>
+        <item>Where your father born?</item>
+        <item>What was the name of your first Pet</item>
+        <item>What was the name of your elementary school</item>
+        <item>Where you born</item>
+        <item>What year you enter high school</item>
+        <item>What is your Favorite Country</item>
+        <item>What is your Favorite City</item>
+    </string-array>
+    <string-array name="samples" >
+        <item>Chose One Object</item>
+        <item>Single Pole Key</item>
+        <item>Twice Pole Key</item>
+        <item>fan</item>
+        <item>مهتابی</item>
+        <item>لوستر</item>
+        <item>مودم</item>
+        <item>تلویزیون</item>
+    </string-array>
+    <string-array name="room_icon" >
+        <item>Room</item>
+        <item>Salon</item>
+        <item>Kitchen</item>
+    </string-array>
+    <integer-array  name="room_icon_image" >
+        <item>@drawable/bedroom_gray</item>
+        <item>@drawable/armchair_gray_add</item>
+        <item>@drawable/kitchen_gray</item>
+    </integer-array >
+    <integer-array name="image_id">
+<!--        <item>@drawable/iconmaterial_library_music</item>-->
+<!--        <item>@drawable/videocam_black_18dp</item>-->
+        <item>@drawable/iconmaterial_settings_remote</item>
+        <item>@drawable/exclude</item>
+        <item>@drawable/responsive</item>
+        <item>@drawable/outline</item>
+    </integer-array>
+</resources>

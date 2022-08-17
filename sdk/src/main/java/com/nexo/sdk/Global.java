@@ -25,8 +25,8 @@ public class Global {
     public static LocalBroadcastManager manager;
     public static final String JOB = "Job";
     public static final String UPDATE = "UPDATE";
-    public static final String DELETE = "UPDATE";
-    public static final String INSERT = "UPDATE";
+    public static final String DELETE = "DELETE";
+    public static final String INSERT = "INSERT";
     public static final String ALL = "ALL";
     public static final String RESULT = "RESULT";
     public static final String ID = "ID";

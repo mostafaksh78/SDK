@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="questions">
+        <item>یک سوال را انتخاب نمایید</item>
+        <item>نام شهر محل تولد پدر شما چیست</item>
+        <item>اسم اولین حیوان خانگی شما چیست</item>
+        <item>نام مدرسه ابتدایی شما چیست</item>
+        <item>شهر محل تولد شما چه شهریست</item>
+        <item>چه سالی وارد دبستان شدید</item>
+        <item>کشور مورد علاقه شما</item>
+        <item>شهر مورد علاقه شما</item>
+    </string-array>
+    <string-array name="room_icon" >
+        <item>اتاق</item>
+        <item>سالن</item>
+        <item>اشپزخانه</item>
+    </string-array>
+</resources>

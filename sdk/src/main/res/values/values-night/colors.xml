@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="main_green">#26A69A</color>
+    <color name="main_gray">#EFEFEF</color>
+    <color name="gray_card">#E5E5E5</color>
+    <color name="main_black">#020202</color>
+    <color name="main_red">#FF0000</color>
+    <color name="main_white">#18191a</color>
+    <color name="front_white">#242526</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="textColor">#FFFFFF</color>
+    <color name="room_transparent" >#80000000</color>
+</resources>

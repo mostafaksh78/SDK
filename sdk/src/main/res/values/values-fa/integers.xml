@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="rotationLeft">0</integer>
+    <integer name="rotationRight">180</integer>
+    <integer name="rotation2">270</integer>
+    <integer name="swithcRotate" >180</integer>
+</resources>

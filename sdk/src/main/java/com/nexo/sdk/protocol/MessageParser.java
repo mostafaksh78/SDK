@@ -91,7 +91,7 @@ public class MessageParser implements Runnable {
                                                     deviceStatus = device.getString("Status");
                                                 }
 //
-                                                boolean fastAccess = device.getBoolean("EasyMode");
+                                                boolean fastAccess = (device.getString("EasyMode").equals("1") || device.getString("EasyMode").equals("true"));
                                                 String roomID = ((device.getString("RoomID").equals("null") || "".equals(device.getString("RoomID"))) ? "-1" : device.getString("RoomID"));
                                                 JSONArray users = device.getJSONArray("Users");
                                                 Log.i("RoomId", roomID);
