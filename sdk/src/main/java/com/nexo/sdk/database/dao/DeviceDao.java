@@ -94,4 +94,20 @@ public abstract class DeviceDao {
     public abstract void deleteThem(List<String> relayIDs);
     @Query("SELECT * FROM Devices Where fastAccess = 1")
     public abstract Device[] getAllFastAccess();
+    @Query("SELECT * FROM Devices Where userIDs LIKE '%' || :userID || '%' AND roomID =:roomID")
+    public abstract List<Device> getRoomDevices(String userID,String roomID);
+    @Query("SELECT type FROM Devices Where userIDs LIKE '%' || :userID || '%'")
+    public abstract List<String> findCategories(String userID);
+    @Query("SELECT type FROM Devices Where userIDs LIKE '%' || :userID || '%' AND token LIKE '%' || :busMate || '%'")
+    public abstract Device[] getRelaysOfBusMate(String userID,String busMate);
+    public Device[] getRelaysOfBus(String userID,String busMate){
+        char[] chars = busMate.toCharArray();
+        char[] busChar = new char[chars.length -2];
+        System.arraycopy(chars, 0, busChar, 0, chars.length - 2);
+        String s = new String(busChar);
+        Device[] relaysOfBusMate = getRelaysOfBusMate(userID, s);
+        return relaysOfBusMate;
+    }
+    @Query("SELECT * FROM Devices Where userIDs LIKE '%' || :userID || '%' AND type =:type")
+    public abstract List<String> getDeviceByTypeAndUser(String type,String userID);
 }
