@@ -98,7 +98,7 @@ public abstract class DeviceDao {
     public abstract List<Device> getRoomDevices(String userID,String roomID);
     @Query("SELECT type FROM Devices Where userIDs LIKE '%' || :userID || '%'")
     public abstract List<String> findCategories(String userID);
-    @Query("SELECT type FROM Devices Where userIDs LIKE '%' || :userID || '%' AND token LIKE '%' || :busMate || '%'")
+    @Query("SELECT * FROM Devices Where userIDs LIKE '%' || :userID || '%' AND token LIKE '%' || :busMate || '%'")
     public abstract Device[] getRelaysOfBusMate(String userID,String busMate);
     public Device[] getRelaysOfBus(String userID,String busMate){
         char[] chars = busMate.toCharArray();
@@ -109,5 +109,5 @@ public abstract class DeviceDao {
         return relaysOfBusMate;
     }
     @Query("SELECT * FROM Devices Where userIDs LIKE '%' || :userID || '%' AND type =:type")
-    public abstract List<String> getDeviceByTypeAndUser(String type,String userID);
+    public abstract List<Device> getDeviceByTypeAndUser(String type,String userID);
 }

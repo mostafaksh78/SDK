@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <integer name="rotationRight">0</integer>
-    <integer name="rotation2">90</integer>
-    <integer name="rotationLeft">180</integer>
-    <integer name="swithcRotate" >0</integer>
-</resources>

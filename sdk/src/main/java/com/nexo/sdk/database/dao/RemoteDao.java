@@ -73,6 +73,6 @@ public abstract class RemoteDao  {
     public abstract void updateKey(String remoteID, String s);
     @Query("DELETE FROM Remotes WHERE id =:id")
     public abstract void deleteByID(String id);
-    @Query("SELECT * FROM Devices Where userIDs LIKE '%' || :userID || '%' AND roomID =:roomID")
+    @Query("SELECT * FROM Remotes Where userIDs LIKE '%' || :userID || '%' AND roomID =:roomID")
     public abstract List<Remote> getRoomRemotes(String userID,String roomID);
 }
