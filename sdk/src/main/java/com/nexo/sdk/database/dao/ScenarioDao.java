@@ -68,4 +68,8 @@ public abstract class ScenarioDao {
     public abstract void deleteAll();
     @Query("DELETE FROM Scenarios WHERE id =:scenarioID")
     public abstract void deleteByID(String scenarioID);
+    @Query("SELECT * FROM Scenarios WHERE userIDs LIKE '%' || :userID || '%' AND NOT time = '-1'")
+    public abstract void getSchedules(String userID);
+    @Query("SELECT * FROM Scenarios WHERE userIDs LIKE '%' || :userID || '%' AND  time = '-1'")
+    public abstract void getScenarios(String userID);
 }
