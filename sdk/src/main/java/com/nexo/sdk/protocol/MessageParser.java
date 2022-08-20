@@ -527,7 +527,7 @@ public class MessageParser implements Runnable {
                                                 Scenario scenario = new Scenario(scenarioID,scenarioName,scenarioTime,scenarioStatus,scenarioDeviceTokens,scenarioDeviceStatus,scenarioUsers);
                                                 Global.database.getScenarioDao().insert(scenario);
                                                 Intent intent = new Intent(Scenario.ACTION);
-                                                intent.putExtra(Global.JOB, Global.UPDATE);
+                                                intent.putExtra(Global.JOB, Global.INSERT);
                                                 intent.putExtra(Global.ID,scenarioID);
                                                 Global.manager.sendBroadcast(intent);
                                                 break;
