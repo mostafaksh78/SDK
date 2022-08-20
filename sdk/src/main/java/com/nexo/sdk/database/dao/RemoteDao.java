@@ -75,4 +75,6 @@ public abstract class RemoteDao  {
     public abstract void deleteByID(String id);
     @Query("SELECT * FROM Remotes Where userIDs LIKE '%' || :userID || '%' AND roomID =:roomID")
     public abstract List<Remote> getRoomRemotes(String userID,String roomID);
+    @Query("SELECT model FROM Remotes Where userIDs LIKE '%' || :userID || '%'")
+    public abstract String[] getModels(String userID);
 }
