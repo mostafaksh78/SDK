@@ -1,8 +1,12 @@
 package com.nexo.sdk.dataModels;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import java.util.Objects;
 
 @Entity (tableName = "Scenarios")
 public class Scenario {
@@ -83,5 +87,20 @@ public class Scenario {
 
     public void setUserIDs(String userIDs) {
         this.userIDs = userIDs;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Scenario device = (Scenario) o;
+        return id.equals(device.id);
+    }
+
+    @Override
+    public int hashCode() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return Objects.hash(id);
+        }
+        return id.length();
     }
 }

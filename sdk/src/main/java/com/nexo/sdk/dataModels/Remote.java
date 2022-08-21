@@ -1,8 +1,12 @@
 package com.nexo.sdk.dataModels;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import java.util.Objects;
 
 @Entity(tableName = "Remotes")
 public class Remote {
@@ -123,5 +127,20 @@ public class Remote {
 
     public void setRoomID(String roomID) {
         this.roomID = roomID;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Remote device = (Remote) o;
+        return id.equals(device.id);
+    }
+
+    @Override
+    public int hashCode() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return Objects.hash(id);
+        }
+        return id.length();
     }
 }

@@ -1,8 +1,12 @@
 package com.nexo.sdk.dataModels;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import java.util.Objects;
 
 @Entity(tableName = "IfThen")
 public class IfThen {
@@ -74,4 +78,20 @@ public class IfThen {
     public void setThenState(String thenState) {
         this.thenState = thenState;
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IfThen device = (IfThen) o;
+        return id.equals(device.id);
+    }
+
+    @Override
+    public int hashCode() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return Objects.hash(id);
+        }
+        return id.length();
+    }
 }
+

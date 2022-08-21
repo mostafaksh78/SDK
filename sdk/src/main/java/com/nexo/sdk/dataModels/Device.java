@@ -1,8 +1,12 @@
 package com.nexo.sdk.dataModels;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import java.util.Objects;
 
 @Entity(tableName = "Devices")
 public class Device {
@@ -123,5 +127,21 @@ public class Device {
 
     public void setOnline(boolean online) {
         this.online = online;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Device device = (Device) o;
+        return token.equals(device.token);
+    }
+
+    @Override
+    public int hashCode() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return Objects.hash(token);
+        }
+        return token.length();
     }
 }
