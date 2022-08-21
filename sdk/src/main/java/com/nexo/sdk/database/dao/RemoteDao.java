@@ -65,7 +65,7 @@ public abstract class RemoteDao  {
 
     @Query("SELECT id FROM Remotes")
     public abstract List<String> getAllIds();
-    @Query("DELETE FROM Remotes WHERE id IN (:v)")
+    @Query("DELETE FROM Remotes WHERE id NOT IN (:v)")
     public abstract void clearOthers(List<String> v);
     @Query("UPDATE Remotes SET label =:name, type =:type ,model =:model , brand =:brand , userIDs =:users , protocol =:protocol , userMake =:userMake , irID =:irID , roomID =:roomID WHERE id =:id")
     public abstract void updateWithoutKey(String id, String name, String type, String model, String brand, String users, String protocol, String userMake, String irID, String roomID);
@@ -77,4 +77,6 @@ public abstract class RemoteDao  {
     public abstract List<Remote> getRoomRemotes(String userID,String roomID);
     @Query("SELECT model FROM Remotes Where userIDs LIKE '%' || :userID || '%'")
     public abstract String[] getModels(String userID);
+    @Query("SELECT * FROM Remotes Where userIDs LIKE '%' || :userID || '%' AND model =:model")
+    public abstract Remote[] findUserAndModel(String userID,String model);
 }
