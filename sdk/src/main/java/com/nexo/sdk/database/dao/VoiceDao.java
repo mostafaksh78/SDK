@@ -63,4 +63,7 @@ public abstract class VoiceDao {
             e.printStackTrace();
         }
     }
+
+    @Query("DELETE FROM VoiceCommands")
+    public abstract void deleteAll();
 }
