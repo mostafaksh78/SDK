@@ -541,6 +541,41 @@ public class MessageParser implements Runnable {
                     }
                     break;
                 }
+                case 15:{
+                    switch (protocol.getMethod()){
+                        case Protocol.Methods.responseGet_N:
+                        case Protocol.Methods.responseSet_N: {
+                            break;
+                        }
+                        case Protocol.Methods.responseSet:
+                        case Protocol.Methods.requestSet:
+                        case Protocol.Methods.responseGet:{
+                            JSONObject data = protocol.getData();
+                            if (!data.toString().equals("{}")) {
+                                if (data.has("Result")){
+                                    Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.JOB,Global.CONNECTION).putExtra(Global.TEXT,data.getString("Result")));
+                                }
+                                else if (data.has("wifi")){
+                                    String wifi = data.getString("wifi");
+                                    String pass = data.getString("pass");
+                                    String token = data.getString("Token");
+                                    List<String> devices = new ArrayList<>();
+                                    devices.add(token);
+                                    if (token.split("M")[0].equals("B8")){
+                                        Device[] relaysOfBus = Global.database.getDeviceDao().getRelaysOfBus(token);
+                                        for (Device d :
+                                                relaysOfBus) {
+                                            devices.add(d.getToken());
+                                        }
+                                    }
+                                    Global.database.getDeviceDao().updateSSIDandPassword(wifi,pass,devices);
+                                    Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.JOB,Global.CONNECTION).putExtra(Global.SSID,wifi).putExtra(Global.PASS,pass).putExtra(Global.ID,token));
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
                 case 18:{
                     switch (protocol.getMethod()) {
                         case Protocol.Methods.responseGet_N:

@@ -48,4 +48,6 @@ public abstract class UserDao {
     }
     @Query("SELECT * FROM Users WHERE customerID =:customerID")
     protected abstract List<User> getCommonCustomer(String customerID);
+    @Query("SELECT * FROM Users WHERE userName =:username")
+    protected abstract User getUserWithUsername(String username);
 }

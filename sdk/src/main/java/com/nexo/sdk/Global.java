@@ -17,6 +17,8 @@ import java.util.List;
 public class Global {
     public static final String SERVER_IP = "server.nexobuilding.com";
     public static final int SERVER_PORT = 6500;
+    public static final String PASS = "PASS";
+    public static final String SSID = "SSID";
     public static Socket socket;
     public static final List<String> queue = new ArrayList<>();
     public static PrintWriter output;

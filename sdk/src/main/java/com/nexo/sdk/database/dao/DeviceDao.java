@@ -108,6 +108,17 @@ public abstract class DeviceDao {
         Device[] relaysOfBusMate = getRelaysOfBusMate(userID, s);
         return relaysOfBusMate;
     }
+    public Device[] getRelaysOfBus(String busMate){
+        char[] chars = busMate.toCharArray();
+        char[] busChar = new char[chars.length -2];
+        System.arraycopy(chars, 0, busChar, 0, chars.length - 2);
+        String s = new String(busChar);
+        Device[] relaysOfBusMate = getRelaysOfBusMate(s);
+        return relaysOfBusMate;
+    }
+    @Query("SELECT * FROM Devices Where token LIKE '%' || :busMate || '%'")
+    protected abstract Device[] getRelaysOfBusMate(String busMate);
+
     @Query("SELECT * FROM Devices Where userIDs LIKE '%' || :userID || '%' AND type =:type")
     public abstract List<Device> getDeviceByTypeAndUser(String type,String userID);
 }
