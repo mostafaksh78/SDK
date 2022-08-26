@@ -47,7 +47,7 @@ public abstract class UserDao {
         return relatives.toArray(new User[0]);
     }
     @Query("SELECT * FROM Users WHERE customerID =:customerID")
-    protected abstract List<User> getCommonCustomer(String customerID);
+    public abstract List<User> getCommonCustomer(String customerID);
     @Query("SELECT * FROM Users WHERE userName =:username")
-    protected abstract User getUserWithUsername(String username);
+    public abstract User getUserWithUsername(String username);
 }
