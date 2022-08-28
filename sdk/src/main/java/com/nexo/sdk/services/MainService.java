@@ -12,10 +12,11 @@ import com.nexo.sdk.protocol.MessageParser;
 import com.nexo.sdk.threads.Connection;
 import com.nexo.sdk.threads.Listener;
 import com.nexo.sdk.threads.Sender;
+import com.nexo.sdk.threads.StopConnection;
 
 import static com.nexo.sdk.threads.Connection.CONNECTION_TAG;
 
-public class MainService extends Service implements Connection.ConnectionCallBack, Listener.MessageCallback {
+public class MainService extends Service implements Connection.ConnectionCallBack, Listener.MessageCallback, StopConnection.StopConnectionCallBack {
     private Listener listener;
     private Sender sender;
     private static MainService service;
@@ -99,5 +100,14 @@ public class MainService extends Service implements Connection.ConnectionCallBac
         new Thread(new Connection(this)).start();
 
     }
+    public void stopConnection(){
+        StopConnection stopConnection = new StopConnection(this);
+        new Thread(stopConnection).start();
 
+    }
+
+    @Override
+    public void onStopped() {
+        Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
+    }
 }
