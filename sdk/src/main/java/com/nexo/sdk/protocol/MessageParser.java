@@ -480,6 +480,14 @@ public class MessageParser implements Runnable {
                                         Global.manager.sendBroadcast(intent);
                                     } else if (data.has("Job")) {
                                         switch (data.getString("Job")) {
+                                            case "Action":{
+                                                String scenarioID = data.getString("ScenarioID");
+                                                Intent intent = new Intent(Scenario.ACTION);
+                                                intent.putExtra(Global.JOB, Global.ACTION);
+                                                intent.putExtra(Global.ID,scenarioID);
+                                                Global.manager.sendBroadcast(intent);
+                                                break;
+                                            }
                                             case "Update": {
                                                 String scenarioID = data.getString("ScenarioID");
                                                 String scenarioName = data.getString("Name");

@@ -108,6 +108,6 @@ public class MainService extends Service implements Connection.ConnectionCallBac
 
     @Override
     public void onStopped() {
-        Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
+//        Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
     }
 }
