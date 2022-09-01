@@ -34,7 +34,7 @@ public class Connection implements Runnable {
                 Global.socket.setSendBufferSize(Integer.MAX_VALUE);
                 Global.output = new PrintWriter(Global.socket.getOutputStream());
                 Global.input = new DataInputStream((Global.socket.getInputStream()));
-                Log.i(CONNECTION_TAG, "Connected");
+                Log.i(CONNECTION_TAG, "Connected 1");
                 callBack.connectionCallBack(true);
                 return;
             } else {
@@ -44,7 +44,7 @@ public class Connection implements Runnable {
                     Global.socket.setSendBufferSize(Integer.MAX_VALUE);
                     Global.output = new PrintWriter(Global.socket.getOutputStream());
                     Global.input = new DataInputStream((Global.socket.getInputStream()));
-                    Log.i(CONNECTION_TAG, "Connected");
+                    Log.i(CONNECTION_TAG, "Connected 2");
                     callBack.connectionCallBack(true);
                     return;
                 } else if (Global.socket.isOutputShutdown()) {
@@ -53,7 +53,7 @@ public class Connection implements Runnable {
                     Global.socket.setSendBufferSize(Integer.MAX_VALUE);
                     Global.output = new PrintWriter(Global.socket.getOutputStream());
                     Global.input = new DataInputStream((Global.socket.getInputStream()));
-                    Log.i(CONNECTION_TAG, "Connected");
+                    Log.i(CONNECTION_TAG, "Connected 3");
                     callBack.connectionCallBack(true);
                     return;
                 } else if (Global.socket.isInputShutdown()) {
@@ -62,11 +62,13 @@ public class Connection implements Runnable {
                     Global.socket.setSendBufferSize(Integer.MAX_VALUE);
                     Global.output = new PrintWriter(Global.socket.getOutputStream());
                     Global.input = new DataInputStream((Global.socket.getInputStream()));
-                    Log.i(CONNECTION_TAG, "Connected");
+                    Log.i(CONNECTION_TAG, "Connected 4");
                     callBack.connectionCallBack(true);
                     return;
                 }else {
+                    Log.i(CONNECTION_TAG, "Connected 5");
                     callBack.connectionCallBack(true);
+                    return;
                 }
             }
         } catch (Exception e) {

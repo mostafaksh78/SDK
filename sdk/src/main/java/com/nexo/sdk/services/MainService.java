@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
 
 import com.nexo.sdk.Global;
 import com.nexo.sdk.protocol.MessageParser;
@@ -15,6 +14,8 @@ import com.nexo.sdk.threads.Sender;
 import com.nexo.sdk.threads.StopConnection;
 
 import static com.nexo.sdk.threads.Connection.CONNECTION_TAG;
+
+import org.jetbrains.annotations.Nullable;
 
 public class MainService extends Service implements Connection.ConnectionCallBack, Listener.MessageCallback, StopConnection.StopConnectionCallBack {
     private Listener listener;
