@@ -66,7 +66,8 @@ public class MessageParser implements Runnable {
                                             Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.JOB,Global.RESULT).putExtra(Global.ID,token).putExtra(Global.TEXT,data.getString("Result")));
                                         }
 
-                                    } else if (data.has("Devices")) {
+                                    }
+                                    else if (data.has("Devices")) {
                                         Global.database.getDeviceDao().deleteAll();
                                         JSONArray devices = data.getJSONArray("Devices");
                                         for (int i = 0; i < devices.length(); i++) {
@@ -105,7 +106,8 @@ public class MessageParser implements Runnable {
                                             }
                                         }
                                         Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.JOB,Global.ALL));
-                                    } else if (data.has("Job")) {
+                                    }
+                                    else if (data.has("Job")) {
                                         String job = data.getString("Job");
                                         Log.i("CommandDebug", "Command 1 : " + job);
                                         switch (job) {
@@ -124,21 +126,25 @@ public class MessageParser implements Runnable {
                                                 Log.i("UpdateToken", token);
                                                 if (Global.database.getDeviceDao().ifExist(token)) {
                                                     Global.database.getDeviceDao().updateWithoutOnline(token,type,label,users.toString(),status,roomID,update,fastAccess,ssid,password);
+                                                    Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.ID,token).putExtra(Global.JOB,Global.UPDATE));
                                                 } else {
                                                     if (data.has("Online")) {
                                                         online = data.getString("Online");
                                                         Device device = new Device(token, type, label, status, roomID, users.toString(), fastAccess, update, ssid, password, online.equals("1"));
                                                         Global.database.getDeviceDao().insert(device);
+
                                                     }else{
                                                         Device device = new Device(token, type, label, status, roomID, users.toString(), fastAccess, update, ssid, password, false);
                                                         Global.database.getDeviceDao().insert(device);
                                                     }
+                                                    Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.ID,token).putExtra(Global.JOB,Global.INSERT));
                                                 }
                                                 break;
                                             }
                                             case "Delete": {
                                                 String token = data.getString("Token");
                                                 Global.database.getDeviceDao().deleteWithToken(token);
+                                                Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.ID,token).putExtra(Global.JOB,Global.DELETE));
                                                 break;
                                             }
                                         }
