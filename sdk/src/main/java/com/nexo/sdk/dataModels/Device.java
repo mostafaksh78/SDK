@@ -144,4 +144,10 @@ public class Device {
         }
         return token.length();
     }
+
+    @Override
+    public String toString() {
+        return "Device{" +
+                "token='" + token + '\'' + '}';
+    }
 }

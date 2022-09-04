@@ -211,6 +211,7 @@ public class MessageParser implements Runnable {
                                     Intent intent = new Intent(Device.ACTION);
                                     intent.putExtra(Global.JOB, Global.UPDATE);
                                     intent.putExtra(Global.ID,token);
+                                    intent.putExtra(Global.CONNECTION,connection);
                                     Global.manager.sendBroadcast(intent);
                                 }
                             }

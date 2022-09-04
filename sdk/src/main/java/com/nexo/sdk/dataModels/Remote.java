@@ -143,4 +143,10 @@ public class Remote {
         }
         return id.length();
     }
+
+    @Override
+    public String toString() {
+        return "Remote{" +
+                "id='" + id + '\'' + '}';
+    }
 }
