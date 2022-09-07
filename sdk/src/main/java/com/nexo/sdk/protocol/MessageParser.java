@@ -321,6 +321,16 @@ public class MessageParser implements Runnable {
                                                 Global.manager.sendBroadcast(intent);
                                                 break;
                                             }
+                                            case "Insert New":{
+                                                String userID = data.getString("UserID");
+                                                String phoneNumber = data.getString("Phone");
+                                                Intent intent = new Intent(User.ACTION);
+                                                intent.putExtra(Global.JOB, Global.NEW_USER);
+                                                intent.putExtra(Global.PHONE,phoneNumber);
+                                                intent.putExtra(Global.ID,userID);
+                                                Global.manager.sendBroadcast(intent);
+                                                break;
+                                            }
                                         }
                                     } else if (data.has("Result")){
                                         String result = data.getString("Result");
