@@ -24,6 +24,7 @@ public class Global {
     public static final String USER_NAME_EXIST = "USER_NAME_EXIST";
     public static final String PHONE = "PHONE";
     public static final String NEW_USER = "NEW_USER";
+    public static final String OTA = "OTA";
     public static Socket socket;
     public static final List<String> queue = new ArrayList<>();
     public static PrintWriter output;

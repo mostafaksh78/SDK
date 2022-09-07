@@ -378,6 +378,18 @@ public class MessageParser implements Runnable {
                     }
                     break;
                 }
+                case 7:{
+                    JSONObject data = protocol.getData();
+                    if (data.has("Result")) {
+                        if (data.has("Token")) {
+                            Intent intent = new Intent(Device.ACTION);
+                            intent.putExtra(Global.JOB, Global.OTA);
+                            intent.putExtra(Global.TEXT,data.getString("Result"));
+                            intent.putExtra(Global.ID,data.getString("Token"));
+                            Global.manager.sendBroadcast(intent);
+                        }
+                    }
+                }
                 case 9:{
                     switch (protocol.getMethod()) {
                         case Protocol.Methods.responseGet_N:
