@@ -379,14 +379,31 @@ public class MessageParser implements Runnable {
                     break;
                 }
                 case 7:{
-                    JSONObject data = protocol.getData();
-                    if (data.has("Result")) {
-                        if (data.has("Token")) {
+                    switch (protocol.getMethod()) {
+                        case Protocol.Methods.responseGet_N:
+                        case Protocol.Methods.responseSet_N: {
+                            break;
+                        }
+                        case Protocol.Methods.responseSet:
+                        case Protocol.Methods.requestSet:
+                        case Protocol.Methods.responseGet: {
+                            JSONObject data = protocol.getData();
+                            JSONArray success = data.getJSONArray("Success");
+                            JSONArray fail = data.getJSONArray("Fail");
+                            for (int i = 0; i < success.length(); i++) {
+                                String token = success.getString(i);
+                                Global.database.getDeviceDao().setUpgrade(token,false);
+                            }
+                            for (int i = 0; i < fail.length(); i++) {
+                                String token = fail.getString(i);
+                                Global.database.getDeviceDao().setUpgrade(token,true);
+                            }
                             Intent intent = new Intent(Device.ACTION);
-                            intent.putExtra(Global.JOB, Global.OTA);
-                            intent.putExtra(Global.TEXT,data.getString("Result"));
-                            intent.putExtra(Global.ID,data.getString("Token"));
+                            intent.putExtra(Global.JOB,Global.OTA);
+                            intent.putExtra(Global.SUCCESS,success.toString());
+                            intent.putExtra(Global.FAIL,fail.toString());
                             Global.manager.sendBroadcast(intent);
+                            break;
                         }
                     }
                 }

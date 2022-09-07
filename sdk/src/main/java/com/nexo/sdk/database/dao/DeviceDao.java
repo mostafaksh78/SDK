@@ -121,4 +121,6 @@ public abstract class DeviceDao {
 
     @Query("SELECT * FROM Devices Where userIDs LIKE '%' || :userID || '%' AND type =:type")
     public abstract List<Device> getDeviceByTypeAndUser(String type,String userID);
+    @Query("UPDATE Devices SET upgrade =:b where token =:token")
+    public abstract void setUpgrade(String token, boolean b);
 }
