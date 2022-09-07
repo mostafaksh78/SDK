@@ -19,6 +19,7 @@ public class Connection implements Runnable {
     @Override
     public void run() {
         try {
+
             if (Global.socket == null) {
                 Global.socket = new Socket(Global.SERVER_IP, Global.SERVER_PORT);
                 Global.socket.setKeepAlive(true);

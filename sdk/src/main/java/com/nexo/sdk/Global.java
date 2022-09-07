@@ -19,6 +19,9 @@ public class Global {
     public static final int SERVER_PORT = 6500;
     public static final String PASS = "PASS";
     public static final String SSID = "SSID";
+    public static final String PHONE_EXSIT = "PHONE_EXSIT";
+    public static final String ERROR = "ERROR";
+    public static final String USER_NAME_EXIST = "USER_NAME_EXIST";
     public static Socket socket;
     public static final List<String> queue = new ArrayList<>();
     public static PrintWriter output;

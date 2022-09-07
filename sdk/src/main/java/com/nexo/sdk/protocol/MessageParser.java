@@ -274,11 +274,11 @@ public class MessageParser implements Runnable {
                                                     String question = data.getString("Question");
                                                     String answer = data.getString("Answer");
                                                     String birthDay = data.getString("Birthdate");
-                                                    User user = new User(userID,user_name,passWord,rule,customerID,name,family,phoneNumber,email,birthDay,gender,question,answer);
+                                                    User user = new User(userID, user_name, passWord, rule, customerID, name, family, phoneNumber, email, birthDay, gender, question, answer);
                                                     Global.database.getUserDao().update(user);
                                                     Intent intent = new Intent(User.ACTION);
                                                     intent.putExtra(Global.JOB, Global.UPDATE);
-                                                    intent.putExtra(Global.ID,userID);
+                                                    intent.putExtra(Global.ID, userID);
                                                     Global.manager.sendBroadcast(intent);
                                                 } catch (Exception ex) {
                                                     Log.i("MyCustomUser", ex.toString());
@@ -286,7 +286,6 @@ public class MessageParser implements Runnable {
                                                 break;
                                             }
                                             case "Insert": {
-
                                                 String user_name = data.getString("User_Name");
                                                 String userID = data.getString("UserID");
                                                 String passWord = data.getString("Pass");
@@ -300,7 +299,7 @@ public class MessageParser implements Runnable {
                                                 String question = data.getString("Question");
                                                 String answer = data.getString("Answer");
                                                 String birthDay = data.getString("Birthdate");
-                                                User user = new User(userID,user_name,passWord,rule,customerID,name,family,phoneNumber,email,birthDay,gender,question,answer);
+                                                User user = new User(userID, user_name, passWord, rule, customerID, name, family, phoneNumber, email, birthDay, gender, question, answer);
                                                 Global.database.getUserDao().insert(user);
                                                 Intent intent = new Intent(User.ACTION);
                                                 intent.putExtra(Global.JOB, Global.INSERT);
@@ -322,6 +321,18 @@ public class MessageParser implements Runnable {
                                                 Global.manager.sendBroadcast(intent);
                                                 break;
                                             }
+                                        }
+                                    } else if (data.has("Result")){
+                                        String result = data.getString("Result");
+                                        if (result.equals("UserName Exist")){
+                                            Intent intent = new Intent(User.ACTION);
+                                            intent.putExtra(Global.JOB, Global.ERROR);
+                                            intent.putExtra(Global.TEXT,Global.USER_NAME_EXIST) ;
+                                            Global.manager.sendBroadcast(intent);
+                                        }else if (result.equals("Phone Exist")){
+                                            Intent intent = new Intent(User.ACTION);
+                                            intent.putExtra(Global.JOB, Global.ERROR);
+                                            intent.putExtra(Global.TEXT,Global.PHONE_EXSIT) ;
                                         }
                                     }
                                 } catch (Exception e) {
