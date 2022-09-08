@@ -606,6 +606,50 @@ public class MessageParser implements Runnable {
                     }
                     break;
                 }
+                case 13:{
+                    switch (protocol.getMethod()) {
+                        case Protocol.Methods.responseGet_N:
+                        case Protocol.Methods.responseSet_N: {
+                            break;
+                        }
+                        case Protocol.Methods.responseSet:
+                        case Protocol.Methods.requestSet:
+                        case Protocol.Methods.responseGet: {
+                            JSONObject data = protocol.getData();
+                            if (!data.toString().equals("{}")) {
+                                if (data.has("Connection")) {
+                                    if (!data.toString().equals("{}")) {
+                                        if (data.has("Messages")) {
+                                            Global.manager.sendBroadcast(new Intent(Global.MESSAGES_ACTION).putExtra(Global.JOB,Global.ALL).putExtra(Global.MESSAGES, data.toString()));
+                                        } else if (data.has("Job")) {
+                                            switch (data.getString("Job")) {
+                                                case "Insert": {
+                                                    String body = data.getString("Body");
+                                                    String subject = data.getString("Subject");
+                                                    Global.manager.sendBroadcast(new Intent(Global.MESSAGES_ACTION).putExtra(Global.JOB,Global.INSERT).putExtra(Global.BODY, body).putExtra(Global.SUBJECT,subject));
+                                                    break;
+                                                }
+                                                case "Delete": {
+                                                    String messageID = data.getString("Message_ID");
+                                                    Global.manager.sendBroadcast(new Intent(Global.MESSAGES_ACTION).putExtra(Global.JOB,Global.DELETE).putExtra(Global.ID,messageID));
+                                                    break;
+                                                }
+                                                case "Update": {
+                                                    String body = data.getString("Body");
+                                                    String subject = data.getString("Subject");
+                                                    String messageID = data.getString("Message_ID");
+                                                    Global.manager.sendBroadcast(new Intent(Global.MESSAGES_ACTION).putExtra(Global.JOB,Global.UPDATE).putExtra(Global.BODY, body).putExtra(Global.SUBJECT,subject).putExtra(Global.ID,messageID));
+                                                    break;
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 case 15:{
                     switch (protocol.getMethod()){
                         case Protocol.Methods.responseGet_N:

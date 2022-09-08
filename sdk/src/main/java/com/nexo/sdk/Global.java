@@ -1,6 +1,7 @@
 package com.nexo.sdk;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -27,6 +28,10 @@ public class Global {
     public static final String OTA = "OTA";
     public static final String FAIL = "FAIL";
     public static final String SUCCESS = "SUCCESS";
+    public static final String MESSAGES_ACTION = "MESSAGE_ACTION";
+    public static final String MESSAGES = "MESSAGES";
+    public static final String BODY = "BODY";
+    public static final String SUBJECT = "SUBJECT";
     public static Socket socket;
     public static final List<String> queue = new ArrayList<>();
     public static PrintWriter output;
