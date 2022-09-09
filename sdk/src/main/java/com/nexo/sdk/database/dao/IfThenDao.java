@@ -24,4 +24,6 @@ public abstract class IfThenDao {
     public abstract void deleteAll();
     @Query("DELETE FROM IfThen WHERE id =:id")
     public abstract void deleteByID(String id);
+    @Query("SELECT * FROM Ifthen WHERE user LIKE '%' || :userID || '%'")
+    public abstract IfThen[] findByUser(String userID);
 }
