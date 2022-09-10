@@ -24,4 +24,6 @@ public abstract class BusDao {
     public abstract void deleteAll();
     @Query("DELETE FROM Buses WHERE token =:token")
     public abstract void deleteByID(String token);
+    @Query("DELETE FROM Buses WHERE type =:type")
+    public abstract void deleteType(String type);
 }

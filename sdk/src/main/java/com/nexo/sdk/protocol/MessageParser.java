@@ -105,6 +105,7 @@ public class MessageParser implements Runnable {
                                                 e.printStackTrace();
                                             }
                                         }
+                                        Global.database.getDeviceDao().deleteType("SB8");
                                         Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.JOB,Global.ALL));
                                     }
                                     else if (data.has("Job")) {
@@ -1032,6 +1033,7 @@ public class MessageParser implements Runnable {
                                                 e.printStackTrace();
                                             }
                                         }
+                                        Global.database.getBusDao().deleteType("SB8");
                                         Intent intent = new Intent(Bus.ACTION);
                                         intent.putExtra(Global.JOB, Global.ALL);
                                         Global.manager.sendBroadcast(intent);

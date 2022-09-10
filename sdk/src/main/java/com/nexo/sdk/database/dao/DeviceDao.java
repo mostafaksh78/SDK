@@ -127,4 +127,6 @@ public abstract class DeviceDao {
     public abstract void setRoomIDofRoom(String roomID,String preRoomID);
     @Query("SELECT * FROM devices WHERE roomID=:roomID")
     public abstract Device[] getRoomDevices(String roomID);
+    @Query("DELETE FROM devices where type=:type")
+    public abstract void deleteType(String type);
 }
