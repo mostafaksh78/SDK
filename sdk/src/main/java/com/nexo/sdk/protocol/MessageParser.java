@@ -457,7 +457,16 @@ public class MessageParser implements Runnable {
                                             }
                                             case "Delete": {
                                                 String roomID = data.getString("RoomID");
+                                                Device[] roomDevices = Global.database.getDeviceDao().getRoomDevices(roomID);
                                                 Global.database.getRoomDao().deleteWithRoomID(roomID);
+                                                Global.database.getDeviceDao().setRoomIDofRoom("-1",roomID);
+                                                for (Device d :
+                                                        roomDevices) {
+                                                    Intent intent = new Intent(Device.ACTION);
+                                                    intent.putExtra(Global.JOB, Global.UPDATE);
+                                                    intent.putExtra(Global.ID,d.getToken());
+                                                    Global.manager.sendBroadcast(intent);
+                                                }
                                                 Intent intent = new Intent(Room.ACTION);
                                                 intent.putExtra(Global.JOB, Global.DELETE);
                                                 intent.putExtra(Global.ID,roomID);

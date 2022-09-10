@@ -123,4 +123,8 @@ public abstract class DeviceDao {
     public abstract List<Device> getDeviceByTypeAndUser(String type,String userID);
     @Query("UPDATE Devices SET upgrade =:b where token =:token")
     public abstract void setUpgrade(String token, boolean b);
+    @Query("UPDATE DEVICES SET roomID =:roomID WHERE roomID=:preRoomID")
+    public abstract void setRoomIDofRoom(String roomID,String preRoomID);
+    @Query("SELECT * FROM devices WHERE roomID=:roomID")
+    public abstract Device[] getRoomDevices(String roomID);
 }
