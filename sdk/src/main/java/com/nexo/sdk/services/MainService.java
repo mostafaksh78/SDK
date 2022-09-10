@@ -21,6 +21,7 @@ public class MainService extends Service implements Connection.ConnectionCallBac
     private Listener listener;
     private Sender sender;
     private static MainService service;
+    private boolean stopped = false;
 
     public static MainService instance() {
         return service;
@@ -46,6 +47,7 @@ public class MainService extends Service implements Connection.ConnectionCallBac
         listener.stop();
     }
     public  void startConnection(){
+        stopped = false;
         Connection connection = new Connection(this);
         Thread thread = new Thread(connection);
         thread.start();
@@ -71,16 +73,18 @@ public class MainService extends Service implements Connection.ConnectionCallBac
                 Thread thread2 = new Thread(sender);
                 thread2.start();
             }else{
-                Log.d(CONNECTION_TAG, "connectionCallBack: " +" reconnect");
-                Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
-                // check for reconnecting
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if (!stopped) {
+                    Log.d(CONNECTION_TAG, "connectionCallBack: " +" reconnect");
+                    Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
+                    // check for reconnecting
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    //                new Thread(new Reconnection(this)).start();
+                    new Thread(new Connection(this)).start();
                 }
-                //                new Thread(new Reconnection(this)).start();
-                new Thread(new Connection(this)).start();
 
             }
         };
@@ -102,6 +106,7 @@ public class MainService extends Service implements Connection.ConnectionCallBac
 
     }
     public void stopConnection(){
+        stopped = true;
         listener.stop();
         StopConnection stopConnection = new StopConnection(this);
         new Thread(stopConnection).start();

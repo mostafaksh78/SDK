@@ -114,6 +114,7 @@ public class Listener implements Runnable {
 
     public void stop() {
         cancel();
+
         try {
             Global.input.close();
             Global.socket.close();
