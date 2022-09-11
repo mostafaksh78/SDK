@@ -99,12 +99,22 @@ public class MainService extends Service implements Connection.ConnectionCallBac
 
     @Override
     public void disconnected() {
-        if (!stopped) {
-            Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
-            // check for reconnecting
-            //                new Thread(new Reconnection(this)).start();
-            new Thread(new Connection(this)).start();
-        }
+        Runnable runnable = new Runnable() {
+            public void run() {
+                if (!stopped) {
+                    Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
+                    // check for reconnecting
+                    //                new Thread(new Reconnection(this)).start();
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    new Thread(new Connection(MainService.this)).start();
+                }
+            }
+        };
+        new Thread(runnable).start();
 
     }
     public void stopConnection(){
