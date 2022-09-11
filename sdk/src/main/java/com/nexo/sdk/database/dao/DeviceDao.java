@@ -32,10 +32,8 @@ public abstract class DeviceDao {
     @Query("DELETE FROM Devices")
     public abstract void deleteAll();
 
-    public boolean ifExist(String token) {
-        Device device = getDevice(token);
-        return device != null;
-    }
+    @Query("SELECT EXISTS(SELECT * FROM Devices WHERE token = :token)")
+    public abstract boolean ifExist(String token);
     @Query("UPDATE Devices SET type = :type , label =:label , userIDs =:users,userIDs =:users,userIDs =:users,status =:status,roomID =:roomID,upgrade=:update,fastAccess =:fastAccess,ssid=:ssid,password=:password WHERE token =:token")
     public abstract void updateWithoutOnline(String token, String type, String label, String users, String status, String roomID, boolean update, boolean fastAccess, String ssid, String password);
     @Query("DELETE FROM Devices WHERE token=:token")
