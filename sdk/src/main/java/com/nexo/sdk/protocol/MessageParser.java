@@ -130,7 +130,7 @@ public class MessageParser implements Runnable {
                                                     Global.database.getDeviceDao().updateWithoutOnline(token,type,label,users.toString(),status,roomID,update,fastAccess,ssid,password);
                                                     Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.ID,token).putExtra(Global.JOB,Global.UPDATE));
                                                 } else {
-                                                    Log.d("UpdateToken", "INSERT : " + token);
+                                                    Log.d("RegisterDebugger", "INSERT : " + token);
                                                     if (data.has("Online")) {
                                                         online = data.getString("Online");
                                                         Device device = new Device(token, type, label, status, roomID, users.toString(), fastAccess, update, ssid, password, online.equals("1"));
