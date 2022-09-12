@@ -212,7 +212,7 @@ public class MessageParser implements Runnable {
                                     boolean connection = data.getBoolean("Status_Connection");
                                     Global.database.getDeviceDao().updateConnection(token, connection);
                                     Intent intent = new Intent(Device.ACTION);
-                                    intent.putExtra(Global.JOB, Global.UPDATE);
+                                    intent.putExtra(Global.JOB, Global.CONNECTION_ACTION);
                                     intent.putExtra(Global.ID,token);
                                     intent.putExtra(Global.CONNECTION,connection);
                                     Global.manager.sendBroadcast(intent);
