@@ -215,6 +215,12 @@ public class MessageParser implements Runnable {
                                     intent.putExtra(Global.CONNECTION,connection);
                                     Global.manager.sendBroadcast(intent);
                                 }
+                            }else if (data.has("Status_Connection")) {
+                                boolean connection = data.getBoolean("Status_Connection");
+                                Intent intent = new Intent(Device.ACTION);
+                                intent.putExtra(Global.JOB, Global.CONNECTION_ACTION);
+                                intent.putExtra(Global.CONNECTION,connection);
+                                Global.manager.sendBroadcast(intent);
                             }
                             break;
                         }
@@ -713,10 +719,6 @@ public class MessageParser implements Runnable {
                                         String token = object.getString("Token");
                                         boolean status = object.getString("Status").equals("1");
                                         Global.database.getDeviceDao().updateOnline(token, status);
-                                        Intent intent = new Intent(Device.ACTION);
-                                        intent.putExtra(Global.JOB,Global.UPDATE);
-                                        intent.putExtra(Global.ID,token);
-                                        Global.manager.sendBroadcast(intent);
                                     }
                                     Intent intent = new Intent(Device.ACTION);
                                     intent.putExtra(Global.JOB,Global.CONNECTION_ALL);
