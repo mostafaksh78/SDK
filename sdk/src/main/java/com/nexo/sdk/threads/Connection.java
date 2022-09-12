@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Connection implements Runnable {
-    public static final String CONNECTION_TAG  = "ConnectionInfo";
+    public static final String CONNECTION_TAG  = "CONNINFOTAG";
     private final ConnectionCallBack callBack;
 
     public Connection(ConnectionCallBack callBack) {
