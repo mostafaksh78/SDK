@@ -402,10 +402,10 @@ public class MessageParser implements Runnable {
                                 success = data.getJSONArray("success");
                             }
                             JSONArray fail;
-                            if (data.has("Fail")) {
-                                fail = data.getJSONArray("Fail");
+                            if (data.has("Faile")) {
+                                fail = data.getJSONArray("Faile");
                             } else {
-                                fail = data.getJSONArray("fail");
+                                fail = data.getJSONArray("faile");
                             }
                             for (int i = 0; i < success.length(); i++) {
                                 String token = success.getString(i);
