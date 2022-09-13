@@ -81,4 +81,13 @@ public abstract class RemoteDao  {
     public abstract Remote[] findUserAndModel(String userID,String model);
     @Query("DELETE FROM Remotes")
     public abstract void deleteAll();
+
+    public  void setRooms(String roomID, String[] tokens){
+        for (String token :
+                tokens) {
+            Global.database.getRemoteDao().updateRoom(roomID,token);
+        }
+    }
+    @Query("UPDATE Remotes SET roomID =:roomID WHERE id =:token")
+    public abstract void updateRoom(String roomID,String token);
 }
