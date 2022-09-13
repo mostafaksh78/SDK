@@ -395,8 +395,18 @@ public class MessageParser implements Runnable {
                         case Protocol.Methods.requestSet:
                         case Protocol.Methods.responseGet: {
                             JSONObject data = protocol.getData();
-                            JSONArray success = data.getJSONArray("Success");
-                            JSONArray fail = data.getJSONArray("Fail");
+                            JSONArray success;
+                            if (data.has("Success")) {
+                                success = data.getJSONArray("Success");
+                            }else {
+                                success = data.getJSONArray("success");
+                            }
+                            JSONArray fail;
+                            if (data.has("Fail")) {
+                                fail = data.getJSONArray("Fail");
+                            } else {
+                                fail = data.getJSONArray("fail");
+                            }
                             for (int i = 0; i < success.length(); i++) {
                                 String token = success.getString(i);
                                 Global.database.getDeviceDao().setUpgrade(token,false);
