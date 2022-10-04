@@ -2,6 +2,7 @@ package com.nexo.sdk.database.dao;
 
 import android.os.Build;
 
+import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -16,6 +17,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+@Dao
 
 public abstract class SensorDao {
     @Insert
