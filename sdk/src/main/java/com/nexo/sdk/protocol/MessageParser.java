@@ -11,6 +11,7 @@ import com.nexo.sdk.dataModels.IfThen;
 import com.nexo.sdk.dataModels.Remote;
 import com.nexo.sdk.dataModels.Room;
 import com.nexo.sdk.dataModels.Scenario;
+import com.nexo.sdk.dataModels.Sensor;
 import com.nexo.sdk.dataModels.User;
 
 import org.json.JSONArray;
@@ -63,12 +64,16 @@ public class MessageParser implements Runnable {
                                         String token = "NOT_DEFINED";
                                         if (data.has("Token")) {
                                             token = data.getString("Token");
-                                            Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.JOB,Global.RESULT).putExtra(Global.ID,token).putExtra(Global.TEXT,data.getString("Result")));
+                                            if (!token.startsWith("A")) {
+                                                Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.JOB,Global.RESULT).putExtra(Global.ID,token).putExtra(Global.TEXT,data.getString("Result")));
+                                            }else {
+                                                Global.manager.sendBroadcast(new Intent(Sensor.ACTION).putExtra(Global.JOB,Global.RESULT).putExtra(Global.ID,token).putExtra(Global.TEXT,data.getString("Result")));
+                                            }
                                         }
-
                                     }
                                     else if (data.has("Devices")) {
                                         Global.database.getDeviceDao().deleteAll();
+                                        Global.database.getSensorDao().deleteAll();
                                         JSONArray devices = data.getJSONArray("Devices");
                                         for (int i = 0; i < devices.length(); i++) {
                                             try {
@@ -97,9 +102,14 @@ public class MessageParser implements Runnable {
                                                 JSONArray users = device.getJSONArray("Users");
                                                 Log.i("RoomId", roomID);
                                                 boolean online = device.getString("Online").equals("1");
-                                                Device device1 = new Device(token,type,deviceLabel,deviceStatus,roomID,users.toString(),fastAccess,update,ssid,password,online);
                                                 if (Global.database!=null){
-                                                    Global.database.getDeviceDao().insert(device1);
+                                                    if (!token.startsWith("A")) {
+                                                        Device device1 = new Device(token,type,deviceLabel,deviceStatus,roomID,users.toString(),fastAccess,update,ssid,password,online);
+                                                        Global.database.getDeviceDao().insert(device1);
+                                                    }else {
+                                                        Sensor device1 = new Sensor(token,type,deviceLabel,deviceStatus,roomID,users.toString(),fastAccess,update,ssid,password,online);
+                                                        Global.database.getSensorDao().insert(device1);
+                                                    }
                                                 }
                                             } catch (JSONException | NumberFormatException e) {
                                                 e.printStackTrace();
@@ -107,6 +117,8 @@ public class MessageParser implements Runnable {
                                         }
                                         Global.database.getDeviceDao().deleteType("SB8");
                                         Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.JOB,Global.ALL));
+                                        Global.manager.sendBroadcast(new Intent(Sensor.ACTION).putExtra(Global.JOB,Global.ALL));
+
                                     }
                                     else if (data.has("Job")) {
                                         String job = data.getString("Job");
@@ -126,26 +138,50 @@ public class MessageParser implements Runnable {
                                                 String type = token.split("M")[0];
                                                 if (Global.database.getDeviceDao().ifExist(token)) {
                                                     Log.d("RegisterDebugger", "UPDATE " + token);
-                                                    Global.database.getDeviceDao().updateWithoutOnline(token,type,label,users.toString(),status,roomID,update,fastAccess,ssid,password);
+                                                    if (!token.startsWith("A")) {
+                                                        Global.database.getDeviceDao().updateWithoutOnline(token,type,label,users.toString(),status,roomID,update,fastAccess,ssid,password);
+                                                        Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.ID,token).putExtra(Global.JOB,Global.UPDATE));
+                                                    } else {
+                                                        Global.database.getSensorDao().updateWithoutOnline(token,type,label,users.toString(),status,roomID,update,fastAccess,ssid,password);
+                                                        Global.manager.sendBroadcast(new Intent(Sensor.ACTION).putExtra(Global.ID,token).putExtra(Global.JOB,Global.UPDATE));
+                                                    }
                                                 } else {
                                                     Log.d("RegisterDebugger", "INSERT : " + token);
                                                     if (data.has("Online")) {
                                                         online = data.getString("Online");
-                                                        Device device = new Device(token, type, label, status, roomID, users.toString(), fastAccess, update, ssid, password, online.equals("1"));
-                                                        Global.database.getDeviceDao().insert(device);
+                                                        if (!token.startsWith("A")) {
+                                                            Device device = new Device(token, type, label, status, roomID, users.toString(), fastAccess, update, ssid, password, online.equals("1"));
+                                                            Global.database.getDeviceDao().insert(device);
+                                                            Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.ID,token).putExtra(Global.JOB,Global.UPDATE));
+                                                        } else {
+                                                            Sensor sensor = new Sensor(token, type, label, status, roomID, users.toString(), fastAccess, update, ssid, password, online.equals("1"));
+                                                            Global.database.getSensorDao().insert(sensor);
+                                                            Global.manager.sendBroadcast(new Intent(Sensor.ACTION).putExtra(Global.ID,token).putExtra(Global.JOB,Global.UPDATE));
 
+                                                        }
                                                     }else{
-                                                        Device device = new Device(token, type, label, status, roomID, users.toString(), fastAccess, update, ssid, password, false);
-                                                        Global.database.getDeviceDao().insert(device);
+                                                        if (!token.startsWith("A")) {
+                                                            Device device = new Device(token, type, label, status, roomID, users.toString(), fastAccess, update, ssid, password, false);
+                                                            Global.database.getDeviceDao().insert(device);
+                                                            Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.ID,token).putExtra(Global.JOB,Global.UPDATE));
+                                                        } else {
+                                                            Sensor device = new Sensor(token, type, label, status, roomID, users.toString(), fastAccess, update, ssid, password, false);
+                                                            Global.database.getSensorDao().insert(device);
+                                                            Global.manager.sendBroadcast(new Intent(Sensor.ACTION).putExtra(Global.ID,token).putExtra(Global.JOB,Global.UPDATE));
+                                                        }
                                                     }
                                                 }
-                                                Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.ID,token).putExtra(Global.JOB,Global.UPDATE));
                                                 break;
                                             }
                                             case "Delete": {
                                                 String token = data.getString("Token");
-                                                Global.database.getDeviceDao().deleteWithToken(token);
-                                                Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.ID,token).putExtra(Global.JOB,Global.DELETE));
+                                                if (!token.startsWith("A")) {
+                                                    Global.database.getDeviceDao().deleteWithToken(token);
+                                                    Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.ID,token).putExtra(Global.JOB,Global.DELETE));
+                                                }else {
+                                                    Global.database.getSensorDao().deleteWithToken(token);
+                                                    Global.manager.sendBroadcast(new Intent(Sensor.ACTION).putExtra(Global.ID,token).putExtra(Global.JOB,Global.DELETE));
+                                                }
                                                 break;
                                             }
                                         }
@@ -169,7 +205,12 @@ public class MessageParser implements Runnable {
                                     token = data.getString("Token");
                                     String result = data.getString("Result");
                                     String status = data.getString("Status");
-                                    Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.JOB,Global.RESULT).putExtra(Global.ID,token).putExtra(Global.STATUS,status).putExtra(Global.TEXT,result));
+                                    if (!token.startsWith("A")) {
+                                        Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.JOB,Global.RESULT).putExtra(Global.ID,token).putExtra(Global.STATUS,status).putExtra(Global.TEXT,result));
+                                    } else {
+                                        Global.manager.sendBroadcast(new Intent(Sensor.ACTION).putExtra(Global.JOB,Global.RESULT).putExtra(Global.ID,token).putExtra(Global.STATUS,status).putExtra(Global.TEXT,result));
+
+                                    }
                                 }
                             }
                             break;
@@ -195,21 +236,35 @@ public class MessageParser implements Runnable {
                                     token = data.getString("Token");
                                     String result = data.getString("Result");
                                     String status = data.getString("Status");
-                                    Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.JOB,Global.RESULT).putExtra(Global.ID,token).putExtra(Global.STATUS,status).putExtra(Global.TEXT,result));
+                                    if (!token.startsWith("A")) {
+                                        Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.JOB,Global.RESULT).putExtra(Global.ID,token).putExtra(Global.STATUS,status).putExtra(Global.TEXT,result));
+                                    } else {
+                                        Global.manager.sendBroadcast(new Intent(Sensor.ACTION).putExtra(Global.JOB,Global.RESULT).putExtra(Global.ID,token).putExtra(Global.STATUS,status).putExtra(Global.TEXT,result));
+                                    }
 
                                 }
                             }else if (data.has("Token")) {
                                 String token = data.getString("Token");
                                 if (data.has("Status")) {
                                     Global.database.getDeviceDao().updateStatus(token, data.getString("Status"));
-                                    Intent intent = new Intent(Device.ACTION);
+                                    Intent intent = null;
+                                    if (!token.startsWith("A")) {
+                                        intent = new Intent(Device.ACTION);
+                                    }else {
+                                        intent = new Intent(Sensor.ACTION);
+                                    }
                                     intent.putExtra(Global.JOB, Global.UPDATE);
                                     intent.putExtra(Global.ID,token);
                                     Global.manager.sendBroadcast(intent);
                                 } else if (data.has("Status_Connection")) {
                                     boolean connection = data.getBoolean("Status_Connection");
                                     Global.database.getDeviceDao().updateConnection(token, connection);
-                                    Intent intent = new Intent(Device.ACTION);
+                                    Intent intent;
+                                    if (!token.startsWith("A")) {
+                                        intent = new Intent(Device.ACTION);
+                                    }else {
+                                        intent = new Intent(Sensor.ACTION);
+                                    }
                                     intent.putExtra(Global.JOB, Global.CONNECTION_ACTION);
                                     intent.putExtra(Global.ID,token);
                                     intent.putExtra(Global.CONNECTION,connection);
@@ -218,6 +273,10 @@ public class MessageParser implements Runnable {
                             }else if (data.has("Status_Connection")) {
                                 boolean connection = data.getBoolean("Status_Connection");
                                 Intent intent = new Intent(Device.ACTION);
+                                intent.putExtra(Global.JOB, Global.CONNECTION_ACTION);
+                                intent.putExtra(Global.CONNECTION,connection);
+                                Global.manager.sendBroadcast(intent);
+                                intent = new Intent(Sensor.ACTION);
                                 intent.putExtra(Global.JOB, Global.CONNECTION_ACTION);
                                 intent.putExtra(Global.CONNECTION,connection);
                                 Global.manager.sendBroadcast(intent);
@@ -548,11 +607,12 @@ public class MessageParser implements Runnable {
                                                 JSONObject scenario = scenarios.getJSONObject(i);
                                                 String id = scenario.getString("ScenarioID");
                                                 String name = scenario.getString("Name");
-                                                String time = scenario.getString("Time");
+                                                String time = scenario.getString("Time").trim();
                                                 String status = scenario.getString("Status");
                                                 JSONArray deviceTokens = (scenario.getJSONArray("Tokens"));
                                                 JSONArray deviceStatus = (scenario.getJSONArray("Device_Status"));
                                                 JSONArray users = (scenario.getJSONArray("Users"));
+                                                if (time.equals("")) time = "-1";
                                                 Scenario scenario1 = new Scenario(id,name,time,status,deviceTokens.toString(),deviceStatus.toString(),users.toString());
                                                 Global.database.getScenarioDao().insert(scenario1);
                                             } catch (JSONException e) {
