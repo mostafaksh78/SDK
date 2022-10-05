@@ -65,6 +65,7 @@ public class Global {
     }
     public static void configDatabase(Context context){
         Global.database = Room.databaseBuilder(context, DatabaseClass.class, "Nexo")
+                .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()   //Allows room to do operation on main thread
                 .build();
     }

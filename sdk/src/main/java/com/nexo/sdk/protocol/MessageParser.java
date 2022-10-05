@@ -111,7 +111,7 @@ public class MessageParser implements Runnable {
                                                         Global.database.getSensorDao().insert(device1);
                                                     }
                                                 }
-                                            } catch (JSONException | NumberFormatException e) {
+                                            } catch (Exception e) {
                                                 e.printStackTrace();
                                             }
                                         }
@@ -1072,8 +1072,9 @@ public class MessageParser implements Runnable {
                                         }
                                     }
                                 }
-                            } catch (JSONException e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
+                                Log.e("SDKParserDebug", Log.getStackTraceString(e));
                             }
                             break;
                         }
@@ -1194,6 +1195,7 @@ public class MessageParser implements Runnable {
                                 break;
                             } catch (Exception e) {
                                 e.printStackTrace();
+                                Log.e("SDKParserDebug", Log.getStackTraceString(e));
                             }
                             break;
                         }
