@@ -118,6 +118,7 @@ public class MessageParser implements Runnable {
                                         Global.database.getDeviceDao().deleteType("SB8");
                                         Global.manager.sendBroadcast(new Intent(Device.ACTION).putExtra(Global.JOB,Global.ALL));
                                         Global.manager.sendBroadcast(new Intent(Sensor.ACTION).putExtra(Global.JOB,Global.ALL));
+                                        Log.d("BroadCastDebuggerSDK","BroadCast Device and Sensor send");
 
                                     }
                                     else if (data.has("Job")) {
