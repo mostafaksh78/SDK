@@ -22,7 +22,7 @@ import com.nexo.sdk.database.dao.SensorDao;
 import com.nexo.sdk.database.dao.UserDao;
 import com.nexo.sdk.database.dao.VoiceDao;
 
-@Database(entities = {Bus.class  , Device.class , IfThen.class, Remote.class , Room.class , Scenario.class, User.class, Voice.class, Sensor.class}, version = 1,exportSchema = false)
+@Database(entities = {Bus.class  , Device.class , IfThen.class, Remote.class , Room.class , Scenario.class, User.class, Voice.class, Sensor.class}, version = 2,exportSchema = false)
 public abstract class DatabaseClass extends RoomDatabase {
     public abstract BusDao getBusDao();
     public abstract DeviceDao getDeviceDao();
