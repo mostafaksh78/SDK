@@ -1202,6 +1202,7 @@ public class MessageParser implements Runnable {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e("SDKParserDebug", Log.getStackTraceString(e));
         }
 
     }
