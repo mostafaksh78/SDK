@@ -254,7 +254,7 @@ public class MessageParser implements Runnable {
                                         intent = new Intent(Device.ACTION);
                                     }else {
                                         intent = new Intent(Sensor.ACTION);
-                                        Global.database.getSensorDao().updateStatus(token, data.getJSONObject("Status").toString());
+//                                        Global.database.getSensorDao().updateStatus(token, data.getJSONObject("Status").toString());
                                     }
                                     intent.putExtra(Global.JOB, Global.UPDATE);
                                     intent.putExtra(Global.ID,token);
