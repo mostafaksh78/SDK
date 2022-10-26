@@ -107,6 +107,7 @@ public class MessageParser implements Runnable {
                                                         Device device1 = new Device(token,type,deviceLabel,deviceStatus,roomID,users.toString(),fastAccess,update,ssid,password,online);
                                                         Global.database.getDeviceDao().insert(device1);
                                                     }else {
+                                                        Log.d("SensorDebugger","Sensor Added : " + token);
                                                         Sensor device1 = new Sensor(token,type,deviceLabel,new JSONObject(deviceStatus).toString(),roomID,users.toString(),fastAccess,update,ssid,password,online);
                                                         Global.database.getSensorDao().insert(device1);
                                                     }
