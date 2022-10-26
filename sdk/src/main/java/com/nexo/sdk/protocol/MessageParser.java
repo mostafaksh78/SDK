@@ -107,7 +107,7 @@ public class MessageParser implements Runnable {
                                                         Device device1 = new Device(token,type,deviceLabel,deviceStatus,roomID,users.toString(),fastAccess,update,ssid,password,online);
                                                         Global.database.getDeviceDao().insert(device1);
                                                     }else {
-                                                        Sensor device1 = new Sensor(token,type,deviceLabel,deviceStatus,roomID,users.toString(),fastAccess,update,ssid,password,online);
+                                                        Sensor device1 = new Sensor(token,type,deviceLabel,new JSONObject(deviceStatus).toString(),roomID,users.toString(),fastAccess,update,ssid,password,online);
                                                         Global.database.getSensorDao().insert(device1);
                                                     }
                                                 }
@@ -247,12 +247,13 @@ public class MessageParser implements Runnable {
                             }else if (data.has("Token")) {
                                 String token = data.getString("Token");
                                 if (data.has("Status")) {
-                                    Global.database.getDeviceDao().updateStatus(token, data.getString("Status"));
                                     Intent intent = null;
                                     if (!token.startsWith("A")) {
+                                        Global.database.getDeviceDao().updateStatus(token, data.getString("Status"));
                                         intent = new Intent(Device.ACTION);
                                     }else {
                                         intent = new Intent(Sensor.ACTION);
+                                        Global.database.getSensorDao().updateStatus(token, data.getJSONObject("Status").toString());
                                     }
                                     intent.putExtra(Global.JOB, Global.UPDATE);
                                     intent.putExtra(Global.ID,token);
