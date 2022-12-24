@@ -58,6 +58,7 @@ public class Global {
     public static final String CONNECTION = "CONNECTION";
     public static final String SERVICE_ACTION = "SERVICE_ACTION";
     public static final String ACTION = "ACTION";
+    public static int version;
 
     public static boolean checkNetConnection(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

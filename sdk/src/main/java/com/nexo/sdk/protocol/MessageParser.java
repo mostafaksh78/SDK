@@ -107,9 +107,9 @@ public class MessageParser implements Runnable {
                                                         Device device1 = new Device(token,type,deviceLabel,deviceStatus,roomID,users.toString(),fastAccess,update,ssid,password,online);
                                                         Global.database.getDeviceDao().insert(device1);
                                                     }else {
+                                                        Sensor sensor = new Sensor(token,type,deviceLabel,new JSONObject(deviceStatus).toString(),roomID,users.toString(),fastAccess,update,ssid,password,online);
+                                                        Global.database.getSensorDao().insert(sensor);
                                                         Log.d("SensorDebugger","Sensor Added : " + token);
-                                                        Sensor device1 = new Sensor(token,type,deviceLabel,new JSONObject(deviceStatus).toString(),roomID,users.toString(),fastAccess,update,ssid,password,online);
-                                                        Global.database.getSensorDao().insert(device1);
                                                     }
                                                 }
                                             } catch (Exception e) {
@@ -254,7 +254,7 @@ public class MessageParser implements Runnable {
                                         intent = new Intent(Device.ACTION);
                                     }else {
                                         intent = new Intent(Sensor.ACTION);
-//                                        Global.database.getSensorDao().updateStatus(token, data.getJSONObject("Status").toString());
+                                        Global.database.getSensorDao().updateStatus(token, data.getJSONObject("Status").toString());
                                     }
                                     intent.putExtra(Global.JOB, Global.UPDATE);
                                     intent.putExtra(Global.ID,token);
@@ -441,6 +441,7 @@ public class MessageParser implements Runnable {
                         case Protocol.Methods.responseGet: {
                             Log.i("Authentication", "Logged IN");
                             String userID = protocol.getData().getString("UserID");
+                            Global.version = protocol.getData().getInt("Version");
                             Global.manager.sendBroadcast(new Intent(Global.AUTH_ACTION).putExtra(Global.RESULT,true).putExtra(Global.ID,userID));
                             break;
                         }
