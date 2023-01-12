@@ -16,6 +16,7 @@ public class Sender implements Runnable {
             while (run) {
                 if (Global.queue.size()>0) {
                     try {
+                        Log.d(TAG,"Send");
                         send(Global.queue.get(0));
                         Global.queue.remove(0);
                     } catch (Exception e) {
