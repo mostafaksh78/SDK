@@ -125,6 +125,9 @@ public class Listener implements Runnable {
         } catch (Exception e) {
             Log.i("ErrorInExit", " Stage 3 : " + e);
             e.printStackTrace();
+            Global.socket = null;
+            Global.output = null;
+            Global.input = null;
         }
     }
 

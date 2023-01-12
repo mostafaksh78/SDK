@@ -8,6 +8,7 @@ import com.nexo.sdk.Global;
 import org.apache.commons.codec.binary.Base64;
 
 public class Sender implements Runnable {
+    public static String TAG = "SenderTAG";
     boolean run = true;
     @Override
     public void run() {
@@ -22,6 +23,7 @@ public class Sender implements Runnable {
                     }
                 }
             }
+            Log.d(TAG,"run : false END");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,6 +52,7 @@ public class Sender implements Runnable {
         }
     }
     public void setRun(boolean run) {
+        Log.d(TAG,"set run false ");
         this.run = run;
     }
 

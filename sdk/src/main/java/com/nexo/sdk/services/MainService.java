@@ -14,6 +14,7 @@ import com.nexo.sdk.threads.Sender;
 import com.nexo.sdk.threads.StopConnection;
 
 import static com.nexo.sdk.threads.Connection.CONNECTION_TAG;
+import static com.nexo.sdk.threads.Sender.TAG;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -102,6 +103,7 @@ public class MainService extends Service implements Connection.ConnectionCallBac
                 if (!stopped) {
                     Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
                     if (sender!=null) {
+                        Log.d(TAG,"Going to stop sender");
                         sender.stop();
                     }
                     if (listener!=null) {
@@ -122,6 +124,7 @@ public class MainService extends Service implements Connection.ConnectionCallBac
     public void stopConnection(){
         stopped = true;
         listener.stop();
+        sender.stop();
         StopConnection stopConnection = new StopConnection(this);
         new Thread(stopConnection).start();
 
