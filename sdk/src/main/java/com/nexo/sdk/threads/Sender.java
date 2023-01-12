@@ -13,10 +13,12 @@ public class Sender implements Runnable {
     @Override
     public void run() {
         try {
+            Global.senderThreadIndicator = Global.senderThreadIndicator + 1;
+            Log.d(TAG,"senderThreadIndicator : " +  Global.senderThreadIndicator);
             while (run) {
                 if (Global.queue.size()>0) {
                     try {
-                        Log.d(TAG,"Send");
+
                         send(Global.queue.get(0));
                         Global.queue.remove(0);
                     } catch (Exception e) {
@@ -28,6 +30,8 @@ public class Sender implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Global.senderThreadIndicator = Global.senderThreadIndicator -1;
+        Log.d(TAG,"senderThreadIndicator : " +  Global.senderThreadIndicator);
     }
     private static void send(String letter){
         Log.i("CommunicationByServer" ,"Send : " + letter);
