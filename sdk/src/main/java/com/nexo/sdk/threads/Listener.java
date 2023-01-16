@@ -26,6 +26,8 @@ public class Listener implements Runnable {
         String message = "";
         byte[] mbytes = new byte[1024];
         cancelFlag = true;
+        Global.listenerThreadIndicator = Global.listenerThreadIndicator + 1;
+        Log.d(TAG,"Listener inc : " + Global.listenerThreadIndicator);
         while (cancelFlag) {
             try {
                 if (Global.checkNetConnection(context)) {
@@ -88,6 +90,8 @@ public class Listener implements Runnable {
                 e.printStackTrace();
             }
         }
+        Global.listenerThreadIndicator = Global.listenerThreadIndicator + -1;
+        Log.d(TAG,"Listener dec : " + Global.listenerThreadIndicator);
     }
 
     private void parseMessage(String message) {
