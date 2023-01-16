@@ -83,8 +83,9 @@ public class MainService extends Service implements Connection.ConnectionCallBac
                         e.printStackTrace();
                     }
                     new Thread(new Connection(this)).start();
+                }else{
+                    Log.d(CONNECTION_TAG, "connectionCallBack: " +" Stopped");
                 }
-
             }
         };
         new Thread(runnable).start();
