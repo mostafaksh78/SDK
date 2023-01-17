@@ -104,13 +104,14 @@ public class MainService extends Service implements Connection.ConnectionCallBac
     public void disconnected() {
         Runnable runnable = new Runnable() {
             public void run() {
-                if (!stopped) {
+                if (true) {//! stoppeed
                     Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
                     if (sender!=null) {
                         Log.d(TAG,"Going to stop sender");
                         sender.stop();
                     }
                     if (listener!=null) {
+                        Log.d(TAG,"Going to stop listener");
                         listener.stop();
                     }
                     try {
