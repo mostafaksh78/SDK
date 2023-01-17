@@ -138,6 +138,7 @@ public class MainService extends Service implements Connection.ConnectionCallBac
     }
     public void stopConnection(){
         stopped = true;
+        reConnect = false;
         listener.stop();
         sender.stop();
         StopConnection stopConnection = new StopConnection(this);
