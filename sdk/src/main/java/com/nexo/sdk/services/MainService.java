@@ -23,6 +23,11 @@ public class MainService extends Service implements Connection.ConnectionCallBac
     private Sender sender;
     private static MainService service;
     private boolean stopped = false;
+    private boolean reConnect = true;
+
+    public void setReConnect(boolean reConnect) {
+        this.reConnect = reConnect;
+    }
 
     public static MainService instance() {
         return service;
@@ -78,14 +83,16 @@ public class MainService extends Service implements Connection.ConnectionCallBac
                 thread2.start();
             }else{
                 if (!stopped) {
-                    Log.d(CONNECTION_TAG, "connectionCallBack: " +" reconnect");
-                    Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    if (reConnect) {
+                        Log.d(CONNECTION_TAG, "connectionCallBack: " +" reconnect");
+                        Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        new Thread(new Connection(this)).start();
                     }
-                    new Thread(new Connection(this)).start();
                 }else{
                     Log.d(CONNECTION_TAG, "connectionCallBack: " +" Stopped");
                 }
@@ -104,23 +111,25 @@ public class MainService extends Service implements Connection.ConnectionCallBac
     public void disconnected(int i) {
         Runnable runnable = new Runnable() {
             public void run() {
-                if (false) {//! stoppeed
-                    Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
-                    if (sender!=null) {
-                        Log.d(TAG,"Going to stop sender");
-                        sender.stop();
+                if (!stopped) {//! stoppeed
+                    if (reConnect) {
+                        Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
+                        if (sender!=null) {
+                            Log.d(TAG,"Going to stop sender");
+                            sender.stop();
+                        }
+                        if (listener!=null) {
+                            Log.d(TAG,"Going to stop listener");
+                            listener.stop();
+                        }
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Log.d(CONNECTION_TAG, i + " : Start 1 " + Global.connectorThreadIndicator);
+                        new Thread(new Connection(MainService.this)).start();
                     }
-                    if (listener!=null) {
-                        Log.d(TAG,"Going to stop listener");
-                        listener.stop();
-                    }
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Log.d(CONNECTION_TAG, i + " : Start 1 " + Global.connectorThreadIndicator);
-                    new Thread(new Connection(MainService.this)).start();
                 }
             }
         };
