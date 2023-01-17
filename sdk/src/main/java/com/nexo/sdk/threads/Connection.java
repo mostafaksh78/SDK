@@ -18,6 +18,8 @@ public class Connection implements Runnable {
 
     @Override
     public void run() {
+        Global.connectorThreadIndicator ++;
+        Log.d(CONNECTION_TAG,"connector inc : " + Global.connectorThreadIndicator);
         try {
 
             if (Global.socket == null) {
@@ -27,6 +29,8 @@ public class Connection implements Runnable {
                 Global.output = new PrintWriter(Global.socket.getOutputStream());
                 Global.input = new DataInputStream((Global.socket.getInputStream()));
                 Log.i(CONNECTION_TAG, "Connected");
+                Global.connectorThreadIndicator --;
+                Log.d(CONNECTION_TAG,"connector dec : " + Global.connectorThreadIndicator);
                 callBack.connectionCallBack(true);
                 return;
             } else if (!Global.socket.isConnected()) {
@@ -36,6 +40,8 @@ public class Connection implements Runnable {
                 Global.output = new PrintWriter(Global.socket.getOutputStream());
                 Global.input = new DataInputStream((Global.socket.getInputStream()));
                 Log.i(CONNECTION_TAG, "Connected 1");
+                Global.connectorThreadIndicator --;
+                Log.d(CONNECTION_TAG,"connector dec : " + Global.connectorThreadIndicator);
                 callBack.connectionCallBack(true);
                 return;
             } else {
@@ -46,6 +52,8 @@ public class Connection implements Runnable {
                     Global.output = new PrintWriter(Global.socket.getOutputStream());
                     Global.input = new DataInputStream((Global.socket.getInputStream()));
                     Log.i(CONNECTION_TAG, "Connected 2");
+                    Global.connectorThreadIndicator --;
+                    Log.d(CONNECTION_TAG,"connector dec : " + Global.connectorThreadIndicator);
                     callBack.connectionCallBack(true);
                     return;
                 } else if (Global.socket.isOutputShutdown()) {
@@ -55,6 +63,8 @@ public class Connection implements Runnable {
                     Global.output = new PrintWriter(Global.socket.getOutputStream());
                     Global.input = new DataInputStream((Global.socket.getInputStream()));
                     Log.i(CONNECTION_TAG, "Connected 3");
+                    Global.connectorThreadIndicator --;
+                    Log.d(CONNECTION_TAG,"connector dec : " + Global.connectorThreadIndicator);
                     callBack.connectionCallBack(true);
                     return;
                 } else if (Global.socket.isInputShutdown()) {
@@ -64,10 +74,14 @@ public class Connection implements Runnable {
                     Global.output = new PrintWriter(Global.socket.getOutputStream());
                     Global.input = new DataInputStream((Global.socket.getInputStream()));
                     Log.i(CONNECTION_TAG, "Connected 4");
+                    Global.connectorThreadIndicator --;
+                    Log.d(CONNECTION_TAG,"connector dec : " + Global.connectorThreadIndicator);
                     callBack.connectionCallBack(true);
                     return;
                 }else {
                     Log.i(CONNECTION_TAG, "Connected 5");
+                    Global.connectorThreadIndicator --;
+                    Log.d(CONNECTION_TAG,"connector dec : " + Global.connectorThreadIndicator);
                     callBack.connectionCallBack(true);
                     return;
                 }
