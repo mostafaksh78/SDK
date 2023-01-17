@@ -48,6 +48,8 @@ public class MainService extends Service implements Connection.ConnectionCallBac
         listener.stop();
     }
     public  void startConnection(){
+        Log.d(CONNECTION_TAG,"Start 0 " + Global.connectorThreadIndicator);
+
         stopped = false;
         Connection connection = new Connection(this);
         Thread thread = new Thread(connection);
@@ -116,6 +118,7 @@ public class MainService extends Service implements Connection.ConnectionCallBac
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    Log.d(CONNECTION_TAG,"Start 1 " + Global.connectorThreadIndicator);
                     new Thread(new Connection(MainService.this)).start();
                 }
             }
