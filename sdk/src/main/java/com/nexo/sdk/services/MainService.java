@@ -82,10 +82,10 @@ public class MainService extends Service implements Connection.ConnectionCallBac
                 Thread thread2 = new Thread(sender);
                 thread2.start();
             }else{
+                Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
                 if (!stopped) {
                     if (reConnect) {
                         Log.d(CONNECTION_TAG, "connectionCallBack: " +" reconnect");
-                        Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
                         try {
                             Thread.sleep(500);
                         } catch (InterruptedException e) {
@@ -111,9 +111,9 @@ public class MainService extends Service implements Connection.ConnectionCallBac
     public void disconnected(int i) {
         Runnable runnable = new Runnable() {
             public void run() {
+                Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
                 if (!stopped) {//! stoppeed
                     if (reConnect) {
-                        Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
                         if (sender!=null) {
                             Log.d(TAG,"Going to stop sender");
                             sender.stop();
