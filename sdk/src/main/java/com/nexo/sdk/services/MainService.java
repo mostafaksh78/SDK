@@ -101,7 +101,7 @@ public class MainService extends Service implements Connection.ConnectionCallBac
     }
 
     @Override
-    public void disconnected() {
+    public void disconnected(int i) {
         Runnable runnable = new Runnable() {
             public void run() {
                 if (false) {//! stoppeed
@@ -119,7 +119,7 @@ public class MainService extends Service implements Connection.ConnectionCallBac
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    Log.d(CONNECTION_TAG,"Start 1 " + Global.connectorThreadIndicator);
+                    Log.d(CONNECTION_TAG, i + " : Start 1 " + Global.connectorThreadIndicator);
                     new Thread(new Connection(MainService.this)).start();
                 }
             }

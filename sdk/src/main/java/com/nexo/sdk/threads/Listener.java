@@ -2,7 +2,6 @@ package com.nexo.sdk.threads;
 
 import android.content.Context;
 import android.os.Message;
-import android.os.RemoteException;
 import android.util.Log;
 
 import com.nexo.sdk.Crypto;
@@ -56,7 +55,7 @@ public class Listener implements Runnable {
                                     }
                                 } else {
                                     Log.e(TAG, "read Disconnect Server closed");
-                                    messageCallback.disconnected();
+                                    messageCallback.disconnected(1);
                                     cancel();
                                     break;
                                 }
@@ -66,23 +65,23 @@ public class Listener implements Runnable {
                                 Global.socket = null;
                                 Global.input = null;
                                 Global.output = null;
-                                messageCallback.disconnected();
+                                messageCallback.disconnected(2);
                                 cancel();
 
                             }
                         } else {
                             Log.i(TAG, "input null");
-                            messageCallback.disconnected();
+                            messageCallback.disconnected(3);
                             cancel();
                         }
                     } else {
                         Log.i(TAG, "socket disconnected");
-                        messageCallback.disconnected();
+                        messageCallback.disconnected(4);
                         cancel();
                     }
                 } else {
                     Log.i(TAG, "network disconnected");
-                    messageCallback.disconnected();
+                    messageCallback.disconnected(5);
                     cancel();
                 }
             } catch (Exception e) {
@@ -142,6 +141,6 @@ public class Listener implements Runnable {
     public interface MessageCallback {
         void messageCallback(String message);
 
-        void disconnected();
+        void disconnected(int i);
     }
 }
