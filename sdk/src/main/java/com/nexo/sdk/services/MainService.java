@@ -69,18 +69,22 @@ public class MainService extends Service implements Connection.ConnectionCallBac
 
                 Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,true));
                 Log.d(TAG,"Listener inc : " + "start Listener : " + Global.listenerThreadIndicator);
-                listener = new Listener(MainService.this,MainService.this);
-                Log.d(CONNECTION_TAG, "connectionCallBack: " +"connect");
-                Thread thread = new Thread(listener);
-                thread.start();
+                if (Global.listenerThreadIndicator == 0) {
+                    listener = new Listener(MainService.this,MainService.this);
+                    Log.d(CONNECTION_TAG, "connectionCallBack: " +"connect");
+                    Thread thread = new Thread(listener);
+                    thread.start();
+                }
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                sender = new Sender();
-                Thread thread2 = new Thread(sender);
-                thread2.start();
+                if (Global.senderThreadIndicator == 0) {
+                    sender = new Sender();
+                    Thread thread2 = new Thread(sender);
+                    thread2.start();
+                }
             }else{
                 Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
                 if (!stopped) {

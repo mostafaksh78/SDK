@@ -32,12 +32,12 @@ public class Global {
     public static final String MESSAGES = "MESSAGES";
     public static final String BODY = "BODY";
     public static final String SUBJECT = "SUBJECT";
-    public static Socket socket;
-    public static final List<String> queue = new ArrayList<>();
-    public static PrintWriter output;
-    public static DataInputStream input;
+    public static volatile Socket socket;
+    public static volatile List<String> queue = new ArrayList<>();
+    public static volatile PrintWriter output;
+    public static volatile DataInputStream input;
     public static volatile DatabaseClass database;
-    public static LocalBroadcastManager manager;
+    public static volatile LocalBroadcastManager manager;
     public static final String JOB = "Job";
     public static final String UPDATE = "UPDATE";
     public static final String DELETE = "DELETE";
