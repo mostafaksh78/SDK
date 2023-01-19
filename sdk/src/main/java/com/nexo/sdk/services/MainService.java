@@ -24,7 +24,7 @@ public class MainService extends Service implements Connection.ConnectionCallBac
     private static MainService service;
     private boolean stopped = false;
     private boolean reConnect = true;
-
+    public static final String NEW_RECONNECT_SYSTEM_DEBUG = "NEW_RE_TAG";
     public void setReConnect(boolean reConnect) {
         this.reConnect = reConnect;
     }
@@ -69,7 +69,9 @@ public class MainService extends Service implements Connection.ConnectionCallBac
 
                 Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,true));
                 Log.d(TAG,"Listener inc : " + "start Listener : " + Global.listenerThreadIndicator);
+                Log.d(NEW_RECONNECT_SYSTEM_DEBUG,"Connection callback true now want to start listener if not exist " + Global.listenerThreadIndicator);
                 if (Global.listenerThreadIndicator == 0) {
+                    Log.d(NEW_RECONNECT_SYSTEM_DEBUG,"Connection callback true now want to starting listener " + Global.listenerThreadIndicator);
                     listener = new Listener(MainService.this,MainService.this);
                     Log.d(CONNECTION_TAG, "connectionCallBack: " +"connect");
                     Thread thread = new Thread(listener);
@@ -80,15 +82,20 @@ public class MainService extends Service implements Connection.ConnectionCallBac
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                Log.d(NEW_RECONNECT_SYSTEM_DEBUG,"Connection callback true now want to start sender if not exist " + Global.senderThreadIndicator);
                 if (Global.senderThreadIndicator == 0) {
+                    Log.d(NEW_RECONNECT_SYSTEM_DEBUG,"Connection callback true now want to starting sender " + Global.senderThreadIndicator);
                     sender = new Sender();
                     Thread thread2 = new Thread(sender);
                     thread2.start();
                 }
             }else{
                 Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
+                Log.d(NEW_RECONNECT_SYSTEM_DEBUG,"Connection callback false" );
                 if (!stopped) {
+                    Log.d(NEW_RECONNECT_SYSTEM_DEBUG,"not stopped" );
                     if (reConnect) {
+                        Log.d(NEW_RECONNECT_SYSTEM_DEBUG,"starting reconnect" );
                         Log.d(CONNECTION_TAG, "connectionCallBack: " +" reconnect");
                         try {
                             Thread.sleep(500);
@@ -115,9 +122,12 @@ public class MainService extends Service implements Connection.ConnectionCallBac
     public void disconnected(int i) {
         Runnable runnable = new Runnable() {
             public void run() {
+                Log.d(NEW_RECONNECT_SYSTEM_DEBUG,"Disconnected : " + i );
                 Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
                 if (!stopped) {//! stoppeed
+                    Log.d(NEW_RECONNECT_SYSTEM_DEBUG,"Disconnected : not stopeed " );
                     if (reConnect) {
+                        Log.d(NEW_RECONNECT_SYSTEM_DEBUG,"Disconnected : reconnect " );
                         if (sender!=null) {
                             Log.d(TAG,"Going to stop sender");
                             sender.stop();
