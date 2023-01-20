@@ -42,6 +42,7 @@ public class MainService extends Service implements Connection.ConnectionCallBac
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         service = this;
+        Log.d("Debugggggger","Service BroadCast");
         Global.manager.sendBroadcast(new Intent(Global.SERVICE_ACTION));
         return super.onStartCommand(intent, flags, startId);
     }
