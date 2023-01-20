@@ -49,8 +49,12 @@ public class MainService extends Service implements Connection.ConnectionCallBac
     @Override
     public void onDestroy() {
         super.onDestroy();
-        sender.stop();
-        listener.stop();
+        if (sender!=null) {
+            sender.stop();
+        }
+        if (listener!=null) {
+            listener.stop();
+        }
     }
     public  void startConnection(){
         Log.d(CONNECTION_TAG,"Start 0 " + Global.connectorThreadIndicator);
@@ -126,8 +130,6 @@ public class MainService extends Service implements Connection.ConnectionCallBac
                 Global.manager.sendBroadcast(new Intent(Global.CONNECTION_ACTION).putExtra(Global.CONNECTION,false));
                 if (!stopped) {//! stoppeed
                     Log.d(NEW_RECONNECT_SYSTEM_DEBUG,"Disconnected : not stopeed " );
-                    if (reConnect) {
-                        Log.d(NEW_RECONNECT_SYSTEM_DEBUG,"Disconnected : reconnect " );
                         if (sender!=null) {
                             Log.d(TAG,"Going to stop sender");
                             sender.stop();
@@ -141,6 +143,8 @@ public class MainService extends Service implements Connection.ConnectionCallBac
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
+                    if (reConnect) {
+                        Log.d(NEW_RECONNECT_SYSTEM_DEBUG,"Disconnected : reconnect " );
                         Log.d(CONNECTION_TAG, i + " : Start 1 " + Global.connectorThreadIndicator);
                         new Thread(new Connection(MainService.this)).start();
                     }

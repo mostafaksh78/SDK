@@ -90,6 +90,8 @@ public class Connection implements Runnable {
             Global.socket = null;
             Global.input = null;
             Global.output = null;
+            Global.connectorThreadIndicator --;
+            Log.d(CONNECTION_TAG,"connector dec : " + Global.connectorThreadIndicator);
             Log.i(CONNECTION_TAG,"not Connected : " + e);
             callBack.connectionCallBack(false);
         }
