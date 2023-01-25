@@ -530,6 +530,8 @@ public class MessageParser implements Runnable {
                                                 Global.database.getRoomDao().update(new Room(roomID,users.toString(),roomName,icon));
                                                 Global.database.getDeviceDao().setRooms(roomID,tokens);
                                                 Global.database.getRemoteDao().setRooms(roomID,tokens);
+                                                Global.database.getDeviceDao().clearRoom(roomID,tokens);
+                                                Global.database.getRemoteDao().clearRoom(roomID,tokens);
                                                 Intent intent = new Intent(Room.ACTION);
                                                 intent.putExtra(Global.JOB, Global.UPDATE);
                                                 intent.putExtra(Global.ID,roomID);

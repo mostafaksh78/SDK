@@ -57,6 +57,7 @@ public class MainService extends Service implements Connection.ConnectionCallBac
             listener.stop();
         }
     }
+
     public  void startConnection(){
         Log.d(CONNECTION_TAG,"Start 0 " + Global.connectorThreadIndicator);
 
