@@ -90,6 +90,6 @@ public abstract class RemoteDao  {
     }
     @Query("UPDATE Remotes SET roomID =:roomID WHERE id =:token")
     public abstract void updateRoom(String roomID,String token);
-    @Query("UPDATE Remotes SET roomID=\"-1\" WHERE roomID =:roomID AND NOT id=:tokensInRoom")
+    @Query("UPDATE Remotes SET roomID=\"-1\" WHERE roomID =:roomID AND  id NOT IN (:tokensInRoom)")
     public abstract void clearRoom(String roomID, String[] tokensInRoom);
 }

@@ -81,7 +81,7 @@ public abstract class DeviceDao {
             Global.database.getDeviceDao().updateRoom(roomID,token);
         }
     }
-    @Query("UPDATE Devices SET roomID=\"-1\" WHERE roomID =:roomID AND NOT token=:tokensInRoom")
+    @Query("UPDATE Devices SET roomID=\"-1\" WHERE roomID =:roomID AND token NOT IN (:tokensInRoom)")
     public abstract void clearRoom(String roomID, String[] tokensInRoom);
     @Query("UPDATE Devices SET roomID =:roomID WHERE token =:token")
     public abstract void updateRoom(String roomID,String token);
