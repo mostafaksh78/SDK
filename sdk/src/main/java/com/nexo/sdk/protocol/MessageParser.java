@@ -1146,6 +1146,7 @@ public class MessageParser implements Runnable {
                                                 Global.database.getDeviceDao().updateSSIDandPassword(ssid , pass, relayIDs);
                                                 Intent intent = new Intent(Bus.ACTION);
                                                 intent.putExtra(Global.JOB, Global.INSERT);
+                                                intent.putExtra(Global.ID,token);
                                                 Global.manager.sendBroadcast(intent);
                                                 break;
                                             }
@@ -1174,6 +1175,7 @@ public class MessageParser implements Runnable {
 
                                                 boolean bb = Global.database.getBusDao().ifExist(token);
                                                 Intent intent = new Intent(Bus.ACTION);
+                                                intent.putExtra(Global.ID,token);
                                                 intent.putExtra(Global.JOB, Global.UPDATE);
                                                 if (bb) {
                                                     Global.database.getBusDao().update(bus);
@@ -1205,6 +1207,7 @@ public class MessageParser implements Runnable {
                                                 Global.database.getBusDao().deleteByID(token);
                                                 Global.database.getDeviceDao().deleteThem(relayIDs);
                                                 Intent intent = new Intent(Bus.ACTION);
+                                                intent.putExtra(Global.ID,token);
                                                 intent.putExtra(Global.JOB, Global.DELETE);
                                                 Global.manager.sendBroadcast(intent);
                                                 break;
