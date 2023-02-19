@@ -101,7 +101,7 @@ public class MessageParser implements Runnable {
                                                 String roomID = ((device.getString("RoomID").equals("null") || "".equals(device.getString("RoomID"))) ? "-1" : device.getString("RoomID"));
                                                 JSONArray users = device.getJSONArray("Users");
                                                 Log.i("RoomId", roomID);
-                                                boolean online = device.getString("Online").equals("1");
+                                                boolean online = device.getBoolean("Online");
                                                 if (Global.database!=null){
                                                     if (!token.startsWith("A")) {
                                                         Device device1 = new Device(token,type,deviceLabel,deviceStatus,roomID,users.toString(),fastAccess,update,ssid,password,online);
@@ -1144,6 +1144,9 @@ public class MessageParser implements Runnable {
                                                 Bus bus = new Bus(token,token.split("M")[0],false,label);
                                                 Global.database.getBusDao().insert(bus);
                                                 Global.database.getDeviceDao().updateSSIDandPassword(ssid , pass, relayIDs);
+                                                Intent intent = new Intent(Bus.ACTION);
+                                                intent.putExtra(Global.JOB, Global.INSERT);
+                                                Global.manager.sendBroadcast(intent);
                                                 break;
                                             }
                                             case "Update": {
@@ -1170,6 +1173,10 @@ public class MessageParser implements Runnable {
                                                 Bus bus = new Bus(token,token.split("M")[0],false,label);
                                                 Global.database.getBusDao().update(bus);
                                                 Global.database.getDeviceDao().updateSSIDandPassword(ssid , pass, relayIDs);
+                                                Global.database.getBusDao().ifExist(token);
+                                                Intent intent = new Intent(Bus.ACTION);
+                                                intent.putExtra(Global.JOB, Global.UPDATE);
+                                                Global.manager.sendBroadcast(intent);
                                                 break;
                                             }
                                             case "Delete": {
@@ -1192,6 +1199,9 @@ public class MessageParser implements Runnable {
                                                 }
                                                 Global.database.getBusDao().deleteByID(token);
                                                 Global.database.getDeviceDao().deleteThem(relayIDs);
+                                                Intent intent = new Intent(Bus.ACTION);
+                                                intent.putExtra(Global.JOB, Global.DELETE);
+                                                Global.manager.sendBroadcast(intent);
                                                 break;
                                             }
                                         }
