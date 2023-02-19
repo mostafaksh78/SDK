@@ -27,5 +27,5 @@ public abstract class BusDao {
     @Query("DELETE FROM Buses WHERE type =:type")
     public abstract void deleteType(String type);
     @Query("SELECT EXISTS(SELECT * FROM Buses WHERE token = :token)")
-    public abstract void ifExist(String token);
+    public abstract boolean ifExist(String token);
 }
