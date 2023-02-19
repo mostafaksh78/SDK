@@ -1171,11 +1171,18 @@ public class MessageParser implements Runnable {
                                                     }
                                                 }
                                                 Bus bus = new Bus(token,token.split("M")[0],false,label);
-                                                Global.database.getBusDao().update(bus);
-                                                Global.database.getDeviceDao().updateSSIDandPassword(ssid , pass, relayIDs);
-                                                Global.database.getBusDao().ifExist(token);
+                                               
+                                                boolean bb = Global.database.getBusDao().ifExist(token);
                                                 Intent intent = new Intent(Bus.ACTION);
-                                                intent.putExtra(Global.JOB, Global.UPDATE);
+                                                if (bb) {
+                                                    intent.putExtra(Global.JOB, Global.UPDATE);
+                                                    Global.database.getBusDao().update(bus);
+                                                    Global.database.getDeviceDao().updateSSIDandPassword(ssid , pass, relayIDs);
+                                                } else {
+                                                    intent.putExtra(Global.JOB, Global.INSERT);
+                                                    Global.database.getBusDao().insert(bus);
+                                                    Global.database.getDeviceDao().updateSSIDandPassword(ssid , pass, relayIDs);
+                                                }
                                                 Global.manager.sendBroadcast(intent);
                                                 break;
                                             }
